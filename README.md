@@ -1,2 +1,2 @@
 # bbtt
-Balckbox Token Main Page
+Blackbox Token Main Page
