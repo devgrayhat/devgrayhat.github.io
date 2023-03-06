@@ -20,9 +20,8 @@ function inputValidation(inp){
     fee = feePercentage*inputValue
     document.querySelector('.fee').innerHTML = fee.toFixed(5)
     document.querySelector('.totalValue').innerHTML = (inputValue + fee).toFixed(5)
-    document.querySelector(".eth-submit").innerHTML=`Transfer ${(inputValue + fee).toFixed(5)}`
+    document.querySelector(".eth-submit").innerHTML=`Transfer ${(inputValue + fee).toFixed(5)}`    
     
-    const ethAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
     if(isNaN(fee))
     {
         document.getElementById("transferButton").disabled = true;

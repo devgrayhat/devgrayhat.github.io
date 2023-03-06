@@ -1,46 +1,52 @@
-let provider = new ethers.providers.Web3Provider(window.ethereum)
+let provider
 let signer
 let recipient
-//bbttAddress = '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
-//testAddress = '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
+//bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
+//testAddress ----> '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
 const contractAddress = "0x66b8eC92462678295fA4316FaBC37e035238b4C8";
-const rxAddress = document.getElementById('r-Address');
+
 const inputAmount = document.getElementById('eth-amount'); //eth-amount from user wallet
-const resultField = document.getElementById("totalValue");
-var balance;
+var balance=0
+let balAmount
 
 // Connect Metamask with Dapp =========================================
 async function connectWallet() {
-    
+    provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const network = await provider.getNetwork();
     signer = await provider.getSigner();
 
-    balance = await signer.getBalance()
-    const balAmount = ethers.utils.formatEther(balance);
-    document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);    
+    balance = await signer.getBalance();
+    balAmount = ethers.utils.formatEther(balance);
+    document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);
+      
 }
         
-async function transferFunds(){    
+async function transferFunds(){
 
-    // Check if ethereum object exists and has a selectedAddress property
-    /*
-    if (typeof window.ethereum == undefined || window.ethereum.selectedAddress == null) {
+    //await new Promise(resolve => window.addEventListener('load', resolve)); // wait for DOM to load
+    const resultField = document.getElementById("totalValue");
+    const rxAddress = document.getElementById("receiverAddress");    
+    const inputValue = parseFloat(resultField.innerText);
+    
+    try {
+        await provider.getNetwork(); // throws an error if not connected
+        console.log('Wallet is connected!');
+      } catch (error) {
+        console.log('Wallet is not connected.');
         alert("Connect your wallet.");
         return;
-    }// else {
-        */
-        const totalValue = parseFloat(resultField.innerText);
-    //}
-    if(ethers.utils.formatEther(balance)<totalValue){
-        alert("Error: Top up your wallet first.",totalValue);
+      }
+
+    if(parseFloat(balAmount)<inputValue){
+        alert("Error: Recheck your balance. ");
         return;
     }
     
-    
+
     const ethAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
-    if (rxAddress && rxAddress.value.trim() !== "" && ethAddressRegex.test(rxAddress.value)) {
-        recipient = rxAddress.innerText;
+    if (rxAddress && rxAddress.value.trim() !== "" && ethAddressRegex.test(rxAddress.value)) {        
+
         const publicKeyArmored = 
 `-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP.js v.1.20130420
@@ -56,8 +62,12 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
 
         //console.log(publicKeyArmored);
 
+        
         const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });
-        var txtC = recipient;
+        
+        var txtC = document.getElementById("receiverAddress").value;
+        //alert(txtC);
+
         const message = await openpgp.createMessage({text: txtC });
 
         try {
