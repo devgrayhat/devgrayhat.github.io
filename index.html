@@ -86,7 +86,7 @@
                     <section>
                         <label for="amount">
                             <p>ETH Amount(0.5 to 5)</p>
-                            <p><small>Wallet Balance: 0 <button type="button">Max</button></small></p>
+                            <!-- <p><small>Wallet Balance: 0 <button type="button">Max</button></small></p> -->
                         </label>
                         <div class="form-input">
                             <input type="text" name="amount" id="eth-amount" oninput="inputValidation(this)">
@@ -97,7 +97,7 @@
                         </div>
                         <br>
                         <label for="address">Recipient Wallet Address</label>
-                        <input type="text" name="address" id="r-Address" oninput="addressValidation(this)">
+                        <input type="text" name="address" id="r-Address">
                     </section>
     
                     <div class="transfer-method">
@@ -111,7 +111,7 @@
                         </span>
                     </div>
     
-                    <button type="submit" disabled title="Setup Account First" class="eth-submit">Transfer</button>
+                    <button type="submit" disabled title="Setup Account First" id="transferButton" class="eth-submit" onclick="transferFunds()">Transfer</button>
 
 
     
