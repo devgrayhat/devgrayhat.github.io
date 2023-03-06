@@ -707,6 +707,7 @@ footer span a:hover{
     display: flex;
     align-items: center;
 }
+
 .eth-submit{
     width: 100%;
     background: #97b0fc;
@@ -733,6 +734,34 @@ footer span a:hover{
     border: none;
     color: darkgrey;
 }
+
+.connect-wallet{
+    width: 100%;
+    background: #97b0fc;
+    font-size: .8rem;
+    font-weight: 400;
+    color: #020719;
+    border: none;
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #97b0fc;
+    font-family: Poppins, sans-serif;
+}
+.connect-wallet:hover{
+    background: #020719;
+    color: #97b0fc;
+}
+.connect-wallet:disabled{
+    background: grey;
+    border: none;
+    color: darkgrey;
+}
+.connect-wallet:disabled:hover{
+    background: grey;
+    border: none;
+    color: darkgrey;
+}
+
 .form-bottom{
     width: 100%;
     background-color: #202122;

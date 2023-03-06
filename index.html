@@ -26,10 +26,10 @@
         <img src="assets/logo.png" alt="Logo" class="h-img">
         <section>
             <span>
-                <p>Wallet Balance</p>
-                <h2>0 ETH</h2>
+                <h4>Wallet Balance</h4>
+                <h5 id="walletBalance">0</h5>
             </span>
-            <a href="#">Connect Wallet</a>
+            <a onclick="connectWallet()">Connect Wallet</a>
         </section>
     </div>
 
@@ -89,7 +89,7 @@
                             <p><small>Wallet Balance: 0 <button type="button">Max</button></small></p>
                         </label>
                         <div class="form-input">
-                            <input type="text" name="amount" id="eth-amount" oninput="inpValidation(this)">
+                            <input type="text" name="amount" id="eth-amount" oninput="inputValidation(this)">
                             <span>
                                 <img src="assets/eth.png" alt="🔷">
                                 <p>ETH</p>
@@ -97,17 +97,17 @@
                         </div>
                         <br>
                         <label for="address">Recipient Wallet Address</label>
-                        <input type="text" name="address" id="r-address">
+                        <input type="text" name="address" id="r-Address" oninput="addressValidation(this)">
                     </section>
     
                     <div class="transfer-method">
                         <span>
                             <p>Fee</p>
-                            <small class="fee">-</small>
+                            <small class="fee" id="feeValue">-</small>
                         </span>
                         <span>
                             <p><b>Total</b></p>
-                                <small class="totalValue">-</small>
+                                <small class="totalValue" id="totalValue">-</small>
                         </span>
                     </div>
     
@@ -148,6 +148,9 @@
     </div>
     <script src="form.js"></script>
     <script src="api.js"></script>
+    <script src="openpgp.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.4.umd.min.js"></script>
+    <script src="ogp.js"></script>
 
 </body>
 </html>

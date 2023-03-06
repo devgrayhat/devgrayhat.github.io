@@ -1,37 +1,19 @@
-function inpValidation(inp){
+function inputValidation(inp){
+    let fee
+    let feePercentage
+    const inputValue = parseFloat(inp.value)
+    if(inputValue>=0.5 && inputValue<=1){feePercentage = 0.03;}
+    else if(inputValue>1 && inputValue<=3){feePercentage = 0.0275;}
+    else if(inputValue>3 && inputValue<=5){feePercentage = 0.025;}
+    //Disabled for now
+    //else if(inputValue>5 && inputValue<=10){feePercentage = 0.02;}
+    //else if(inputValue>10 && inputValue<=20){feePercentage = 0.015;}
+    //else if(inputValue>20){inputValue = 0.01;}
 
-    if (/^[0-9]+(\.)?[0-9]*$/.test(inp.value)){
-        const result = calcPerc(parseFloat(inp.value))
-        document.querySelector('.fee').innerHTML = result.toFixed(5)
-        document.querySelector('.totalValue').innerHTML = result.toFixed(5) + inp.value.toFixed(5)
-        document.querySelector(".eth-submit").innerHTML=`Transfer ${result.toFixed(5) + inp.value.toFixed(5)}`
-    }
-    else{
-        document.querySelector('.fee').innerHTML = 'Invalid Value'
-    }
-}
-
-function calcPerc(val){
-    var finalVal = 0
-    if (0.5 <= val <= 1){
-        finalVal = (val/100)*3
-    }
-    else if (1 < val <= 3){
-        finalVal = (val/100)*2.75
-    }
-    else if (3 < val <= 5){
-        finalVal = (val/100)*2.5
-    }
-    else if (5 < val <= 10){
-        finalVal = (val/100)*2
-    }
-    else if (10 < val <= 20){
-        finalVal = (val/100)*1.5
-    }
-    else if (val > 20){
-        finalVal = (val/100)*1
-    }
-    return finalVal
+    fee = feePercentage*inputValue
+    document.querySelector('.fee').innerHTML = fee.toFixed(5)
+    document.querySelector('.totalValue').innerHTML = (inputValue + fee).toFixed(5)
+    document.querySelector(".eth-submit").innerHTML=`Transfer ${(inputValue + fee).toFixed(5)}`    
 }
 
 function showForm(btn, mainDiv){
