@@ -1,9 +1,10 @@
 function inpValidation(inp){
+
     if (/^[0-9]+(\.)?[0-9]*$/.test(inp.value)){
         const result = calcPerc(parseFloat(inp.value))
         document.querySelector('.fee').innerHTML = result.toFixed(5)
-        document.querySelector('.totalValue').innerHTML = result + inp.value.toFixed
-        document.querySelector(".eth-submit").innerHTML=`Transfer ${result}`
+        document.querySelector('.totalValue').innerHTML = result.toFixed(5) + inp.value.toFixed(5)
+        document.querySelector(".eth-submit").innerHTML=`Transfer ${result.toFixed(5) + inp.value.toFixed(5)}`
     }
     else{
         document.querySelector('.fee').innerHTML = 'Invalid Value'
