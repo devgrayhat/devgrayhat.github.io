@@ -1,13 +1,7 @@
-let provider
-let signer
-let recipient
-//bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
-//testAddress ----> '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
-const contractAddress = "0x66b8eC92462678295fA4316FaBC37e035238b4C8";
-
-const inputAmount = document.getElementById('eth-amount'); //eth-amount from user wallet
-var balance=0
-let balAmount
+let provider;
+let signer;
+let recipient;
+let balAmount;
 
 // Connect Metamask with Dapp =========================================
 async function connectWallet() {
@@ -18,31 +12,40 @@ async function connectWallet() {
 
     balance = await signer.getBalance();
     balAmount = ethers.utils.formatEther(balance);
-    document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);
-      
+    document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);      
 }
         
 async function transferFunds(){
-
-    //await new Promise(resolve => window.addEventListener('load', resolve)); // wait for DOM to load
+    //bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
+    //testAddress ----> '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
+    var balance = 0;
+    const minLimit = 0.5;
+    const maxLimit = 5.12500;
+    const contractAddress = "0x66b8eC92462678295fA4316FaBC37e035238b4C8";
+    
     const resultField = document.getElementById("totalValue");
     const rxAddress = document.getElementById("receiverAddress");    
     const inputValue = parseFloat(resultField.innerText);
-    
+    const sendAmount = resultField.innerText; // amount of Ether to send
+    const amountInETH = ethers.utils.parseEther(sendAmount); 
+    if(amountInETH < minLimit || amountInETH>maxLimit){
+        alert('Error! Please enter value between within the allowed limits.');
+        return;
+    }
+
     try {
         await provider.getNetwork(); // throws an error if not connected
         console.log('Wallet is connected!');
-      } catch (error) {
+    } catch (error) {
         console.log('Wallet is not connected.');
         alert("Connect your wallet.");
         return;
-      }
+    }
 
     if(parseFloat(balAmount)<inputValue){
         alert("Error: Recheck your balance. ");
         return;
-    }
-    
+    }    
 
     const ethAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
     if (rxAddress && rxAddress.value.trim() !== "" && ethAddressRegex.test(rxAddress.value)) {        
@@ -59,15 +62,9 @@ cRc/2dVyAAChnQH/QMoAyKb2/DqnLgcW+7oiNAD/PEjYkW06XPIA/vn9QULg
 A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
 =BPMr
 -----END PGP PUBLIC KEY BLOCK-----`;
-
-        //console.log(publicKeyArmored);
-
         
-        const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });
-        
+        const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });        
         var txtC = document.getElementById("receiverAddress").value;
-        //alert(txtC);
-
         const message = await openpgp.createMessage({text: txtC });
 
         try {
@@ -90,30 +87,31 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         const encMessage = await openpgp.readMessage({
             armoredMessage: encrypted // parse armored message
         });
-        
-        const amount = ethers.utils.parseEther(resultField.innerText); // Transfer ETH
-        
+                
+                   
         console.log("Address : ",contractAddress);
         console.log("Encrypted Address :", encrypted);
-        console.log ("Amount to transfer :",amount);
-
+        console.log ("Amount to transfer :",amountInETH);
         
     // The Contract interface
-        let abi = 
-            
+        let abi =             
             [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositETH","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"encryptedMessagesList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"ethAmountList","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"listLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"readEncryptedMessagesList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"readEthAmountList","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"wipeList","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"dst","type":"address"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
                 
         let bbContract = new ethers.Contract(contractAddress, abi, provider.getSigner());
 
-        const sendamount = resultField.innerText; // amount of Ether to send
         const parameter1 = encrypted; // value of the first parameter
+        const inputAmount = document.getElementById('eth-amount'); //eth-amount from user wallet
         const parameter2 = ethers.utils.parseEther(inputAmount.value); // value of the second parameter
+        if(parameter2<minLimit || parameter2>maxLimit){
+            alert('Please enter a value within the allowed limit.');
+            return;
+        }
         try {
-            const tx = await bbContract.depositETH(parameter1, parameter2, {value: ethers.utils.parseEther(sendamount)});
+            const tx = await bbContract.depositETH(parameter1, parameter2, {value: amountInETH});
             await tx.wait(); // wait for the transaction to be confirmed on the blockchain
         } catch (error) {
             console.log('ETH deposit error:', error);
-        }            
+        }
 
         // The element contains a valid Ethereum address
     }
