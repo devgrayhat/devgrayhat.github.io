@@ -1,17 +1,12 @@
-let provider;
-let signer;
-let recipient;
-let balAmount;
-
 // Connect Metamask with Dapp =========================================
 async function connectWallet() {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const network = await provider.getNetwork();
-    signer = await provider.getSigner();
+    const signer = await provider.getSigner();
 
-    balance = await signer.getBalance();
-    balAmount = ethers.utils.formatEther(balance);
+    const balance = await signer.getBalance();
+    const balAmount = ethers.utils.formatEther(balance);
     document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);      
 }
         
@@ -19,8 +14,16 @@ async function transferFunds(){
     //bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
     //testAddress ----> '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
     var balance = 0;
-    const minLimit = 0.5;
-    const maxLimit = 5.12500;
+    const minLimit = 0.005;
+    const maxLimit = 0.05125;    
+    
+    // Get provider and balance
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = await provider.getSigner();
+    const balance = await signer.getBalance();
+    const balAmount = ethers.utils.formatEther(balance);
+
+    // Contract address
     const contractAddress = "0x66b8eC92462678295fA4316FaBC37e035238b4C8";
     
     const resultField = document.getElementById("totalValue");
@@ -103,7 +106,7 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         const inputAmount = document.getElementById('eth-amount'); //eth-amount from user wallet
         const parameter2 = ethers.utils.parseEther(inputAmount.value); // value of the second parameter
         if(parameter2<minLimit || parameter2>maxLimit){
-            alert('Please enter a value within the allowed limit.');
+            alert('Please enter a value within the allowed limits.');
             return;
         }
         try {
@@ -112,8 +115,6 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         } catch (error) {
             console.log('ETH deposit error:', error);
         }
-
-        // The element contains a valid Ethereum address
     }
     
     else {

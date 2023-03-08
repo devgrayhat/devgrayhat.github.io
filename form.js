@@ -1,6 +1,6 @@
 function inputValidation(inp){
-    let fee
-    let feePercentage
+    var fee
+    var feePercentage
     const inputValue = parseFloat(inp.value)
 
     if(inputValue>=0.005 && inputValue<=0.01){feePercentage = 0.03;}
