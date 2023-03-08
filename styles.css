@@ -521,11 +521,11 @@ footer span a:hover{
     display: grid;
     place-items: center;
     color: #020719;
+    cursor: url('./assets/cursor.png'), pointer;
 }
 .form-outer{
     width: 30vw;
     min-width: 280px;
-    background: #35363d;
     color: white;
     display: block;
     z-index: 10;
@@ -544,6 +544,7 @@ footer span a:hover{
     padding: 20px;
     border: 1px solid #97b0fc;
     box-shadow: 0 2px 5px #b2b2b2;
+    margin-bottom: 30px;
 }
 .main-link a{
     text-decoration: none;
@@ -559,6 +560,7 @@ footer span a:hover{
     justify-content: center;
     border-bottom: 1px solid #1d1e23;
     box-shadow: 0 .1rem #3f4047;
+    background: #35363d;
 }
 .form-headers button{
     background: none;
@@ -583,6 +585,7 @@ footer span a:hover{
     height: 100%;
     display: block;
     position: relative;
+    background: #35363d;
 }
 #form-table{
     background: #35363d;
