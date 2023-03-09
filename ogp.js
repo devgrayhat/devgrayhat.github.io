@@ -1,57 +1,101 @@
-// Connect Metamask with Dapp =========================================
+// Connect wallet with Dapp =========================================
 async function connectWallet() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
-    const network = await provider.getNetwork();
-    const signer = await provider.getSigner();
-
-    const balance = await signer.getBalance();
-    const balAmount = ethers.utils.formatEther(balance);
-    document.getElementById('walletBalance').innerText = parseFloat(balAmount).toFixed(8);      
-}
-        
-async function transferFunds(){
-    //bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
-    //testAddress ----> '0x66b8eC92462678295fA4316FaBC37e035238b4C8';
-    var balance = 0;
-    const minLimit = 0.005;
-    const maxLimit = 0.05125;    
-    
-    // Get provider and balance
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = await provider.getSigner();
-    const balance = await signer.getBalance();
-    const balAmount = ethers.utils.formatEther(balance);
-
-    // Contract address
-    const contractAddress = "0x66b8eC92462678295fA4316FaBC37e035238b4C8";
-    
-    const resultField = document.getElementById("totalValue");
-    const rxAddress = document.getElementById("receiverAddress");    
-    const inputValue = parseFloat(resultField.innerText);
-    const sendAmount = resultField.innerText; // amount of Ether to send
-    const amountInETH = ethers.utils.parseEther(sendAmount); 
-    if(amountInETH < minLimit || amountInETH>maxLimit){
-        alert('Error! Please enter value between within the allowed limits.');
-        return;
-    }
 
     try {
-        await provider.getNetwork(); // throws an error if not connected
-        console.log('Wallet is connected!');
+        const network = await provider.getNetwork(); // throws an error if not connected            
+        console.log("Current network ", network.chainId);
+        /*
+        if(network.chainId != 1){
+            alert('Connect to Mainnet first');
+            return;
+        }
+        */
     } catch (error) {
-        console.log('Wallet is not connected.');
+        console.log('Wallet is not connected to.');
         alert("Connect your wallet.");
         return;
     }
 
-    if(parseFloat(balAmount)<inputValue){
+    const signer = await provider.getSigner();
+
+    const balance = await signer.getBalance();
+    const balAmountInWei = ethers.utils.formatEther(balance);
+    document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(8);      
+}
+        
+async function transferFunds(){
+    //bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
+    //testAddress ----> '0xE7951944bfe11158C2a4E3e91c81e626d88f3D90';
+    // Contract address
+    const contractAddress = "0xE7951944bfe11158C2a4E3e91c81e626d88f3D90";
+
+    const minLimit = 0.005;
+    const maxLimit = 0.05125;
+       
+    const rxAddressField = document.getElementById("receiverAddress");
+    const inputEthField = document.getElementById("ethAmount");  
+    const resultField = document.getElementById("totalValue");
+    
+    const inputAmount = inputEthField.value; // amount of Ether to send
+    const inputValueFloat = parseFloat(inputAmount);
+    const inputValueInWei = ethers.utils.parseEther(inputAmount);
+    const resultAmount = resultField.innerText; // amount of Ether to send
+    const resultValueFloat = parseFloat(resultAmount);
+    const resultAmountInWei = ethers.utils.parseEther(resultAmount);
+    let feePercentage;
+    let inputValueWithFee;
+
+    if(inputValueFloat>=0.005 && inputValueFloat<=0.01){feePercentage = 0.03;}
+    else if(inputValueFloat>0.01 && inputValueFloat<=0.03){feePercentage = 0.0275;}
+    else if(inputValueFloat>0.03 && inputValueFloat<=0.05){feePercentage = 0.025;}
+    inputValueWithFee = inputValueFloat + (inputValueFloat*feePercentage);
+
+    if(resultValueFloat<inputValueWithFee.toFixed(5)){
+        alert('Error in values. Try again. ');
+        console.log("Input: " + resultValueFloat + "\n Calc : " +inputValueWithFee );
+        return;
+    }
+
+    // Get provider and balance
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const network = await provider.getNetwork();
+    const signer = await provider.getSigner();
+    const balance = await signer.getBalance();
+    const balAmountInWei = ethers.utils.formatEther(balance);
+
+    console.log("inputAmount: " + inputAmount + "\ninputValueFloat: " + inputValueFloat + "\ninputValueInWei: " +inputValueInWei);    
+    console.log("\nresultAmount: " + resultAmount +  "\nresultValueFloat: " + resultValueFloat + "\nesultAmountInWei: " + resultAmountInWei);
+
+    if(resultValueFloat < minLimit || resultValueFloat>maxLimit){
+        alert('Error! Incorrect input value.');
+        return;
+    }
+
+    try {
+        const network = await provider.getNetwork(); // throws an error if not connected            
+        console.log("Current network ", network.chainId);
+        /*
+        if(network.chainId != 1){
+            alert('Connect to Mainnet first');
+            return;
+        }
+        */
+    } catch (error) {
+        console.log('Wallet is not connected to mainnet.');
+        alert("Connect to mainnet.");
+        return;
+    }
+
+    if(parseFloat(balAmountInWei)<inputValueFloat){
         alert("Error: Recheck your balance. ");
         return;
     }    
 
     const ethAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/;
-    if (rxAddress && rxAddress.value.trim() !== "" && ethAddressRegex.test(rxAddress.value)) {        
+    if (rxAddressField && rxAddressField.value.trim() !== "" && ethAddressRegex.test(rxAddressField.value)) {        
 
         const publicKeyArmored = 
 `-----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -90,30 +134,24 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         const encMessage = await openpgp.readMessage({
             armoredMessage: encrypted // parse armored message
         });
-                
-                   
-        console.log("Address : ",contractAddress);
-        console.log("Encrypted Address :", encrypted);
-        console.log ("Amount to transfer :",amountInETH);
         
-    // The Contract interface
-        let abi =             
-            [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositETH","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"encryptedMessagesList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"ethAmountList","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"listLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"readEncryptedMessagesList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"}],"name":"readEthAmountList","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"wipeList","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"dst","type":"address"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
-                
+        // The Contract interface
+        let abi =   [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":true,"internalType":"bytes32","name":"txHash","type":"bytes32"},{"indexed":true,"internalType":"address","name":"depositor","type":"address"},{"indexed":false,"internalType":"uint256","name":"txValue","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"userInputAmount","type":"uint256"},{"indexed":false,"internalType":"string","name":"encryptedAddress","type":"string"}],"name":"NewDeposit","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositETH","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"dst","type":"address"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
+        
         let bbContract = new ethers.Contract(contractAddress, abi, provider.getSigner());
 
-        const parameter1 = encrypted; // value of the first parameter
-        const inputAmount = document.getElementById('eth-amount'); //eth-amount from user wallet
-        const parameter2 = ethers.utils.parseEther(inputAmount.value); // value of the second parameter
-        if(parameter2<minLimit || parameter2>maxLimit){
+        const parameter1 = encrypted; // value of the first parameter        
+        const parameter2 = inputValueInWei;
+        if(resultValueFloat < minLimit || resultValueFloat>maxLimit || resultValueFloat<inputValueWithFee.toFixed(5)){
             alert('Please enter a value within the allowed limits.');
             return;
         }
-        try {
-            const tx = await bbContract.depositETH(parameter1, parameter2, {value: amountInETH});
+        else try {
+            const tx = await bbContract.depositETH(parameter1, parameter2, {value: resultAmountInWei});
             await tx.wait(); // wait for the transaction to be confirmed on the blockchain
         } catch (error) {
             console.log('ETH deposit error:', error);
+            return;
         }
     }
     
