@@ -529,7 +529,7 @@ footer span a:hover{
     color: white;
     display: block;
     z-index: 10;
-    margin-top: 100px;
+    margin-top: 20px;
     transition: all 1s ease-in-out;
 }
 @media all and (max-width: 500px) {
@@ -605,7 +605,7 @@ footer span a:hover{
 }
 .eth-form{
     width: 100%;
-    padding: 20px;
+    padding: 10px;
     display: block;
     background: #020719;
 }
@@ -613,13 +613,38 @@ footer span a:hover{
     cursor: pointer;
 }
 #form-main section{
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #1d1e23;
     box-shadow: 0 .1rem #3f4047;
 }
+
+.form-body select{
+    width: 100%;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    border: none;
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.075);
+    backdrop-filter: blur(1px);
+    color: white;
+    height: 40px;
+    font-size: 0.85rem;
+    font-family: Poppins, sans-serif;
+}
+
+.form-body option{    
+    background: rgba(107, 107, 107, 0.075);
+    backdrop-filter: blur(1px);
+    color: rgb(18, 18, 18);
+    height: 40px;
+    font-size: 0.85rem;
+    font-family: Poppins, sans-serif;
+}
+
 .form-body input{
     width: 100%;
     padding: 5px 10px;
+    margin-bottom: 15px;
     border: none;
     border: 1px solid white;
     background: rgba(255, 255, 255, 0.075);
@@ -666,6 +691,7 @@ footer span a:hover{
     justify-content: center;
     align-items: center;
     height: 40px;
+    margin-bottom: 10px;
 }
 .form-input input{
     width: 80%;
@@ -704,7 +730,7 @@ footer span a:hover{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 .transfer-method span small{
     display: flex;
@@ -718,7 +744,7 @@ footer span a:hover{
     font-weight: 500;
     color: #020719;
     border: none;
-    margin: 20px 0;
+    margin: 5px 0;
     padding: 10px;
     border: 1px solid #97b0fc;
     font-family: Poppins, sans-serif;

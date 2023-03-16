@@ -83,19 +83,17 @@
 
                 <div class="eth-form" id="form-main">
 
-                    <section>
+                    <section>                        
+                        <select class="form-input" name="currency" id="currencySelect">
+                            <option value="ETH">Ethereum</option>
+                            <option value="USDT">USDT</option>
+                            <option value="USDC">USDC</option>
+                        </select>
                         <label for="amount">
-                            <p>ETH Amount(0.5 to 5)</p>
-                            <!-- <p><small>Wallet Balance: 0 <button type="button">Max</button></small></p> -->
+                            <p>Enter amount</p>
                         </label>
-                        <div class="form-input">
-                            <input type="text" name="amount" id="ethAmount" oninput="inputValidation(this)">
-                            <span>
-                                <img src="assets/eth.png" alt="🔷">
-                                <p>ETH</p>
-                            </span>
-                        </div>
-                        <br>
+                        
+                        <input type="text" name="amount" id="ethAmount" oninput="inputValidation(this)">
                         <label for="address">Recipient Wallet Address</label>
                         <input type="text" name="address" id="receiverAddress">
                     </section>
@@ -118,8 +116,8 @@
             
                 </div>
 
+            </div>
         </div>
-    </div>
 
     <div class="form-footer">
         <a href="https://twitter.com/BBTT_BlackBox" target="_blank">
