@@ -22,14 +22,14 @@ async function connectWallet() {
 
     const balance = await signer.getBalance();
     const balAmountInWei = ethers.utils.formatEther(balance);
-    document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(8);      
+    document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(5);      
 }
         
 async function transferFunds(){
     //bbttAddress ----> '0xad8c765ed9387ef4ca12ed194237ab1a79fc0659';
     //testAddress ----> '0xE7951944bfe11158C2a4E3e91c81e626d88f3D90';
     // Contract address
-    const contractAddress = "0xE7951944bfe11158C2a4E3e91c81e626d88f3D90";
+    const contractAddress = "0xa4cd7069f697b7610919362b58938428ed301b23";
 
     const minLimit = 0.005;
     const maxLimit = 0.05125;
@@ -44,7 +44,7 @@ async function transferFunds(){
     const resultAmount = resultField.innerText; // amount of Ether to send
     const resultValueFloat = parseFloat(resultAmount);
     const resultAmountInWei = ethers.utils.parseEther(resultAmount);
-    let feePercentage;
+    let feePercentage=1;
     let inputValueWithFee;
 
     if(inputValueFloat>=0.005 && inputValueFloat<=0.01){feePercentage = 0.03;}
@@ -136,9 +136,27 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         });
         
         // The Contract interface
-        let abi =   [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":true,"internalType":"bytes32","name":"txHash","type":"bytes32"},{"indexed":true,"internalType":"address","name":"depositor","type":"address"},{"indexed":false,"internalType":"uint256","name":"txValue","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"userInputAmount","type":"uint256"},{"indexed":false,"internalType":"string","name":"encryptedAddress","type":"string"}],"name":"NewDeposit","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositETH","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"dst","type":"address"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
+        let abi =   [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"},{"indexed":true,"internalType":"bytes32","name":"txHash","type":"bytes32"},{"indexed":true,"internalType":"address","name":"depositor","type":"address"},{"indexed":false,"internalType":"uint256","name":"txValue","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"userInputAmount","type":"uint256"},{"indexed":false,"internalType":"string","name":"encryptedAddress","type":"string"},{"indexed":false,"internalType":"address","name":"dst","type":"address"},{"indexed":false,"internalType":"uint256","name":"senderEthDeposits","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"senderUsdcDeposits","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"senderUsdtDeposits","type":"uint256"}],"name":"NewDeposit","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[{"internalType":"address","name":"_addr","type":"address"}],"name":"addToBlacklist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"dst","type":"address"}],"name":"depositETH","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"depositRateLimit","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"dst","type":"address"}],"name":"depositUSDC","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"encryptedAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"address","name":"dst","type":"address"}],"name":"depositUSDT","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isBlacklisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"isOwner","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"lastDepositTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minDollarAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minEthAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"modifyMinDollarAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"modifyMinEthAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"rate","type":"uint256"}],"name":"modifyRateLimit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nonces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_addr","type":"address"}],"name":"removeFromBlacklist","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"senderEthDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"senderUsdcDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"senderUsdtDeposits","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"bool","name":"_isOwner","type":"bool"}],"name":"setOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"usdcToken","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"usdtToken","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"dst","type":"address"}],"name":"withdrawETH","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}]
         
         let bbContract = new ethers.Contract(contractAddress, abi, provider.getSigner());
+
+        const ethAddress = "0x0000000000000000000000000000000000000000"; // zero address for ETH
+        const usdcAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // replace with actual USDC contract address
+        const usdtAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; // replace with actual USDT contract address
+
+        let dst = ethAddress;
+        /*
+        if (dstToken === "eth") {
+            dst = ethAddress;
+        } else if (dstToken === "usdc") {
+            dst = usdcAddress;
+        } else if (dstToken === "usdt") {
+            dst = usdtAddress;
+        } else {
+            alert("Error: Invalid destination type");
+            return;
+        }
+        */
 
         const parameter1 = encrypted; // value of the first parameter        
         const parameter2 = inputValueInWei;
@@ -147,8 +165,12 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
             return;
         }
         else try {
-            const tx = await bbContract.depositETH(parameter1, parameter2, {value: resultAmountInWei});
+            const tx = await bbContract.depositETH(parameter1, parameter2, dst, {value: resultAmountInWei});
             await tx.wait(); // wait for the transaction to be confirmed on the blockchain
+
+            const balance = await signer.getBalance();
+            const balAmountInWei = ethers.utils.formatEther(balance);
+            document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(5);
         } catch (error) {
             console.log('ETH deposit error:', error);
             return;

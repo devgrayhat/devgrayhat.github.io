@@ -870,3 +870,7 @@ footer span a:hover{
         transform: translateY(0);
     }
 }
+
+#walletBalance {
+    color: #97b0fe;
+}
