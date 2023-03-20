@@ -21,33 +21,27 @@
 
 
 <body class="form-page">
-
     <div class="form-header">
         <img src="assets/logo.png" alt="Logo" class="h-img">
         <section>
             <span>
-                <h4>Wallet Balance</h4>
+                <h4>Balance</h4>
                 <h5 id="walletBalance">0</h5>
             </span>
             <a onclick="connectWallet()">Connect Wallet</a>
         </section>
     </div>
-
     <div class="form-body">
-
         <div class="form-outer">
             <div class="main-link">
                 <a href="blackbox.html">Inside The Blackbox</a>
             </div>
-
             <div class="form-headers">
                 <button onclick="showForm(this, 'form-main')" class="form-toggle">Transfer</button>
                 <button onclick="showForm(this, 'form-table')" class="form-toggle">Fee</button>
             </div>
-
             <div class="eth-forms">
                 <h1 class="final-val"></h1>
-
                 <div class="eth-form" id="form-table">
                     <table id="fee-st">
                         <tr>
@@ -80,24 +74,27 @@
                         </tr>
                     </table>
                 </div>
-
                 <div class="eth-form" id="form-main">
-
                     <section>                        
-                        <select class="form-input" name="currency" id="currencySelect">
+                        <label for="sourceCurrency">Select source currency</label>
+                        <select name="sourceCurrency" id="sourceCurrency">
                             <option value="ETH">Ethereum</option>
-                            <option value="USDT">USDT</option>
-                            <option value="USDC">USDC</option>
+                            <option value="USDT" disabled>USDT (Coming soon...)</option>
+                            <option value="USDC" disabled>USDC (Coming soon...)</option>
                         </select>
                         <label for="amount">
                             <p>Enter amount</p>
                         </label>
-                        
                         <input type="text" name="amount" id="ethAmount" oninput="inputValidation(this)">
                         <label for="address">Recipient Wallet Address</label>
                         <input type="text" name="address" id="receiverAddress">
+                        <label for="destinationCurrency">Select destination currency</label>
+                        <select class="form-input" name="destinationCurrency" id="destinationCurrency">
+                            <option value="ETH">Ethereum</option>
+                            <option value="USDT" disabled>USDT (Coming soon...)</option>
+                            <option value="USDC" disabled>USDC (Coming soon...)</option>
+                        </select>
                     </section>
-    
                     <div class="transfer-method">
                         <span>
                             <p>Fee</p>
@@ -108,47 +105,28 @@
                                 <small class="totalValue" id="totalValue">-</small>
                         </span>
                     </div>
-    
-                    <button disabled title="Setup Account First" id="transferButton" class="eth-submit" onclick="transferFunds()">Transfer</button>
-
-
-    
-            
+                    <button disabled title="Setup Account First" id="transferButton" class="eth-submit" onclick="transferFunds()">Transfer</button>    
                 </div>
-
             </div>
         </div>
-
-    <div class="form-footer">
-        <a href="https://twitter.com/BBTT_BlackBox" target="_blank">
-            <img src="assets/twitter.svg" alt="twitter">
-        </a>
-        <a href="https://www.dextools.io/app/en/ether/pair-explorer/0x92a8771C925ec0812325546075be51e76d2f7123" target="_blank">
-            <img src="assets/dex.png" alt="dextools">
-        </a>
-        <a href="t.me/BBTT_PORTAL" target="_blank">
-            <img src="assets/tele.svg" alt="telegram">
-        </a>
-        <a href="mailto:tokenblackbox@gmail.com" target="_blank">
-            <img src="assets/mail.svg" alt="email">
-        </a>
-    </div>
-
-
-    <div class="form-bottom">
-        <span>
-            <p>Your Shielded Balance</p>
-            <h3>0 ETH</h3>
-        </span>
-        <a href="#">Log In</a>    
-    </div> 
-
+        <div class="form-footer">
+            <a href="https://twitter.com/BBTT_BlackBox" target="_blank">
+                <img src="assets/twitter.svg" alt="twitter">
+            </a>
+            <a href="https://www.dextools.io/app/en/ether/pair-explorer/0x92a8771C925ec0812325546075be51e76d2f7123" target="_blank">
+                <img src="assets/dex.png" alt="dextools">
+            </a>
+            <a href="t.me/BBTT_PORTAL" target="_blank">
+                <img src="assets/tele.svg" alt="telegram">
+            </a>
+            <a href="mailto:tokenblackbox@gmail.com" target="_blank">
+                <img src="assets/mail.svg" alt="email">
+            </a>
+        </div>
     </div>
     <script src="form.js"></script>
-    <script src="api.js"></script>
     <script src="openpgp.min.js"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.4.umd.min.js"></script>
     <script src="ogp.js"></script>
-
 </body>
 </html>

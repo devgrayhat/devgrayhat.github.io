@@ -2,16 +2,17 @@ function inputValidation(inp){
     let fee;
     let feePercentage;
     const inputValue = parseFloat(inp.value);
-
+    /*
     if(inputValue>=0.005 && inputValue<=0.01){feePercentage = 0.03;}
     else if(inputValue>0.01 && inputValue<=0.03){feePercentage = 0.0275;}
     else if(inputValue>0.03 && inputValue<=0.05){feePercentage = 0.025;}
-
-    /*
+    */
+    
     if(inputValue>=0.5 && inputValue<=1){feePercentage = 0.03;}
     else if(inputValue>1 && inputValue<=3){feePercentage = 0.0275;}
     else if(inputValue>3 && inputValue<=5){feePercentage = 0.025;}
 
+    /*
     //Disabled for now
     //else if(inputValue>5 && inputValue<=10){feePercentage = 0.02;}
     //else if(inputValue>10 && inputValue<=20){feePercentage = 0.015;}
