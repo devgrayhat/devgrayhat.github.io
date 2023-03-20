@@ -6,7 +6,8 @@ function inputValidation(inp){
     if(inputValue>=0.005 && inputValue<=0.01){feePercentage = 0.03;}
     else if(inputValue>0.01 && inputValue<=0.03){feePercentage = 0.0275;}
     else if(inputValue>0.03 && inputValue<=0.05){feePercentage = 0.025;}
-    */
+    
+   */
     
     if(inputValue>=0.5 && inputValue<=1){feePercentage = 0.03;}
     else if(inputValue>1 && inputValue<=3){feePercentage = 0.0275;}

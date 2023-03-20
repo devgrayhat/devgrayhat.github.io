@@ -42,10 +42,15 @@ async function transferFunds(){
     const resultAmountInWei = ethers.utils.parseEther(resultAmount);
     let feePercentage=1;
     let inputValueWithFee;
-
+    /*
+    if(inputValueFloat>=0.005 && inputValueFloat<=0.01){feePercentage = 0.03;}
+    else if(inputValueFloat>0.01 && inputValueFloat<=0.03){feePercentage = 0.0275;}
+    else if(inputValueFloat>0.03 && inputValueFloat<=0.05){feePercentage = 0.025;}
+    */
     if(inputValueFloat>=0.5 && inputValueFloat<=1){feePercentage = 0.03;}
     else if(inputValueFloat>1 && inputValueFloat<=3){feePercentage = 0.0275;}
     else if(inputValueFloat>3 && inputValueFloat<=5){feePercentage = 0.025;}
+    
     inputValueWithFee = inputValueFloat + (inputValueFloat*feePercentage);
 
     if(resultValueFloat<inputValueWithFee.toFixed(5)){
@@ -59,8 +64,8 @@ async function transferFunds(){
     await provider.send("eth_requestAccounts", []);
     const network = await provider.getNetwork();
     const signer = await provider.getSigner();
-    const balance = await signer.getBalance();
-    const balAmountInWei = ethers.utils.formatEther(balance);
+    let balance = await signer.getBalance();
+    let balAmountInWei = ethers.utils.formatEther(balance);
 
     console.log("inputAmount: " + inputAmount + "\ninputValueFloat: " + inputValueFloat + "\ninputValueInWei: " +inputValueInWei);    
     console.log("\nresultAmount: " + resultAmount +  "\nresultValueFloat: " + resultValueFloat + "\nesultAmountInWei: " + resultAmountInWei);
@@ -77,7 +82,7 @@ async function transferFunds(){
         if(network.chainId != 1){
             alert('Connect to Mainnet to send funds.');
             return;
-        }        
+        } 
     } catch (error) {
         console.log('Wallet is not connected.');
         alert("Connect to mainnet.");
