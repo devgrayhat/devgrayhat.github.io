@@ -4,11 +4,11 @@ async function connectWallet() {
     await provider.send("eth_requestAccounts", []);
 
     try {
-        const network = await provider.getNetwork(); // throws an error if not connected            
+        const network = await provider.getNetwork();            
         console.log("Current network ", network.chainId);
         
         if(network.chainId != 1){
-            alert('Connect to Mainnet first');
+            alert('Connect to the Mainnet');
             return;
         }
     } catch (error) {
@@ -24,27 +24,8 @@ async function connectWallet() {
     document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(5);      
 }
 
-function getBalance() {
-    
-    address = '0xf576C78729Fa4f113940E09791FAE0BEA902843E';
-    console.log(address);
-    fetch(`https://api-goerli.etherscan.io/api?module=account&action=txlist&address=0xf576C78729Fa4f113940E09791FAE0BEA902843E&sort=dsc&apikey=V8KMB25SHNYZ1ZY34JCWECCDRJK9YB3XIG`)
-    .then(response => response.json())
-    .then(res => {
-        var nData = res.result.filter(sItem => sItem.from === 'all');
-        var val = 0;
-        console.log("Value: ",nData);
-        nData.forEach((item) => {
-            val = val + parseFloat(item.value)
-            console.log("Value: ",val);
-        })
-        return parseFloat(val)/10**18;
-        console.log("Value: ",parseFloat(val)/10**18);
-    })
-}
-
 async function transferFunds(){    
-    const contractAddress = ""
+    const contractAddress = "0xAc5eA610898A764697a059979416FF2faD4375a1";
 
     const minLimit = 0.5;
     const maxLimit = 5.125;
@@ -94,17 +75,17 @@ async function transferFunds(){
         console.log("Current network ", network.chainId);
         
         if(network.chainId != 1){
-            alert('Connect to Mainnet first');
+            alert('Connect to Mainnet to send funds.');
             return;
         }        
     } catch (error) {
-        console.log('Wallet is not connected to mainnet.');
+        console.log('Wallet is not connected.');
         alert("Connect to mainnet.");
         return;
     }
 
     if(parseFloat(balAmountInWei)<inputValueFloat){
-        alert("Error: Recheck your balance. ");
+        alert("Error: Check your balance. ");
         return;
     }    
 
@@ -127,9 +108,9 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
         const publicKey = await openpgp.readKey({ armoredKey: publicKeyArmored });        
         var txtC = document.getElementById("receiverAddress").value;
         const message = await openpgp.createMessage({text: txtC });
-
+        let encrypted='';
         try {
-            const encrypted = await openpgp.encrypt({
+                encrypted = await openpgp.encrypt({
                 message,
                 encryptionKeys: publicKey
             });
@@ -179,11 +160,19 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
             
         }
         else try {
-            const tx = await bbContract.depositETH(parameter1, parameter2, dst, {value: resultAmountInWei});
-            await tx.wait();
+            balance = await signer.getBalance();
+            balAmountInWei = ethers.utils.formatEther(balance);
 
-            const balance = await signer.getBalance();
-            const balAmountInWei = ethers.utils.formatEther(balance);
+            if(parseFloat(balAmountInWei) < resultValueFloat){
+                alert('Insufficient balance');
+                return;
+            }
+            else{
+                const tx = await bbContract.depositETH(parameter1, parameter2, dst, {value: resultAmountInWei});
+                await tx.wait();
+            }
+            balance = await signer.getBalance();
+            balAmountInWei = ethers.utils.formatEther(balance);            
             document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(5);
         } catch (error) {
             console.log('ETH deposit error:', error);            
