@@ -470,7 +470,7 @@ footer span a img{
     width: 100%;
     display: grid;
     place-items: center;
-    background: #242528;
+    background: #0f1010;
     font-family: Poppins, sans-serif !important;
 }
 #form-body-index{
@@ -580,10 +580,10 @@ footer span a img{
     font-family: Poppins, sans-serif;
     width: 100%;
     cursor: pointer;
-    background: #35363d;
+    background: #222224;
 }
 .form-toggle:hover{
-    background: rgba(255, 255, 255, 0.075);
+    background: rgba(255, 255, 255, 0.2);
 }
 .form-toggle:nth-of-type(1){
     border-bottom: 2px solid white;
@@ -596,13 +596,13 @@ footer span a img{
     background: #35363d;
 }
 #form-table{
-    background: #35363d;
+    background: #18181a;
     display: none;
     text-align: start;
 }
 #form-main{
     display: block;
-    background: #35363d;
+    background: #18181a;
 }
 .eth-form table th{
     text-align: start;
