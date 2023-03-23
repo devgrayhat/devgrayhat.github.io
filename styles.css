@@ -464,7 +464,7 @@ footer span a img{
 }
 /* FORM */
 .form-page{
-    background: #242528;
+    background: #0f1010;
 }
 .form-body{
     width: 100%;
@@ -504,7 +504,7 @@ footer span a img{
     align-items: center;
     border: 1px solid white;
     height: 90%;
-    padding: 5px 15px;
+    padding: 5px 10px;
 }
 .form-header section span p{
     font-size: 0.8rem;
@@ -519,7 +519,7 @@ footer span a img{
     text-decoration: none;
     font-weight: 600;
     font-size: 0.8rem;
-    padding: 15px;
+    padding: 10px;
     display: block;
     line-height: 0;
     margin-left: 40px;
@@ -621,7 +621,7 @@ footer span a img{
     cursor: pointer;
 }
 #form-main section{
-    padding-bottom: 20px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #1d1e23;
     box-shadow: 0 .1rem #3f4047;
 }
@@ -629,7 +629,7 @@ footer span a img{
 .form-body select{
     width: 100%;
     padding: 5px 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: none;
     border: 1px solid white;
     background: rgba(255, 255, 255, 0.075);
@@ -652,7 +652,7 @@ footer span a img{
 .form-body input{
     width: 100%;
     padding: 5px 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: none;
     border: 1px solid white;
     background: rgba(255, 255, 255, 0.075);
@@ -729,7 +729,7 @@ footer span a img{
 }
 .transfer-method{
     width: 100%;
-    margin-top: 20px;
+    margin-top: 5px;
     background: rgba(255, 255, 255, 0.075);
     padding: 10px;
 }
@@ -751,7 +751,7 @@ footer span a img{
     font-weight: 500;
     color: #020719;
     border: none;
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 10px;
     border: 1px solid #97b0fc;
     font-family: Poppins, sans-serif;
