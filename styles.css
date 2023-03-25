@@ -307,7 +307,7 @@ header{
     font-size: 2rem;
 }
 .s3 h1 small{
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     padding: 10px;
     background: rgba(0, 0, 0, 0.5);
 }
@@ -466,7 +466,7 @@ footer span a:hover{
     width: 100%;
     display: grid;
     place-items: center;
-    background: #242528;
+    background: #0a0a0a;
     font-family: Poppins, sans-serif !important;
 }
 #form-body-index{
@@ -540,16 +540,19 @@ footer span a:hover{
 .main-link{
     background: 202122;
     text-align: center;
-    background: #202122;
     padding: 20px;
-    border: 1px solid #97b0fc;
-    box-shadow: 0 2px 5px #b2b2b2;
     margin-bottom: 30px;
+    border: 2px solid white;
+    background: #061445;
+    box-shadow: 4px 4px 1px 1px rgb(10, 10, 10);
 }
 .main-link a{
     text-decoration: none;
-    color: #97b0fc;
-    font-weight: 600;
+    color: white;
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5vw;
 }
 .main-link:hover{
     box-shadow: none;
