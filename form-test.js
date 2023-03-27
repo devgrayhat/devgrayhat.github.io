@@ -36,8 +36,7 @@ function inputValidation(input) {
             feePercentage = 0.0275;
         } else if (inputValue > 0.03 && inputValue <= 0.05) {
             feePercentage = 0.025;
-        }
-        
+        }        
     } else if(sourceCurrency === "PAXG"){
         
         if (inputValue >= 0.0005 && inputValue <= 0.001) {
@@ -46,8 +45,7 @@ function inputValidation(input) {
             feePercentage = 0.0275;
         } else if (inputValue > 0.03 && inputValue <= 0.05) {
             feePercentage = 0.025;
-        }
-        
+        }        
     }
 
   

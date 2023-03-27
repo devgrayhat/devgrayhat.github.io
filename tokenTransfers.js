@@ -72,13 +72,13 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
       const signer = await tokenContract.provider.getSigner();
       let tx;
       if(tokenAddress==usdcAddress){
-        //console.log("USDC deposit initiated");
-        document.getElementById("transferButton").innerText = "Processing transaction...";      
+        console.log("USDC deposit initiated");
         tx = await targetContract.connect(signer).depositUSDC(encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
+        
       }
       else if(tokenAddress==usdtAddress){
-        document.getElementById("transferButton").innerText = "Processing transaction...";      
         tx = await targetContract.connect(signer).depositUSDT(encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
+              
       }
       await tx.wait();
       console.log("Transfer successful, hash : ", tx.hash);
@@ -94,9 +94,9 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
       console.log("Token approval successful");
       const signer = await tokenContract.provider.getSigner();
 
-      document.getElementById("transferButton").innerText = "Processing transaction...";
       const tx = await targetContract.connect(signer).depositToken(wbtcAddress,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
       await tx.wait();
+        
       console.log("WBTC Transfer successful, hash : ", tx.hash);
       return true;
     }
@@ -108,7 +108,6 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
       console.log("Token approval successful");    
       const signer = await tokenContract.provider.getSigner();
 
-      document.getElementById("transferButton").innerText = "Processing transaction...";
       const tx = await targetContract.connect(signer).depositToken(paxgAddress,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
       await tx.wait();
       console.log("PAXG Transfer successful, hash : ", tx.hash);

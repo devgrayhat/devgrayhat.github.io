@@ -44,55 +44,48 @@ async function connectWallet() {
     updateWalletBalance(provider);
 }
 
-function calculateFee(token, input) {
-    let feePercentage = 1;
-    /*
-    if (input >= 0.5 && input <= 1) {
+function calculateFee(sourceCurrency, input) {
+    let fee;
+    let feePercentage;
+    const inputValue = parseFloat(input).toFixed(5);
+  
+    if (sourceCurrency === "ETH") {
+      if (inputValue >= 0.005 && inputValue <= 0.01) {
         feePercentage = 0.03;
-    } else if (input > 1 && input <= 3) {
+      } else if (inputValue > 0.01 && inputValue <= 0.03) {
         feePercentage = 0.0275;
-    } else if (input > 3 && input <= 5) {
+      } else if (inputValue > 0.03 && inputValue <= 0.05) {
         feePercentage = 0.025;
-    }
-    */
-    if(token=="ETH"){
-        if (input >= 0.005 && input <= 0.01) {
+      }
+    } else if (sourceCurrency === "USDC" || sourceCurrency === "USDT") {
+      if (inputValue >= 10 && inputValue <= 50) {
+        feePercentage = 0.03;
+      } else if (inputValue > 50 && inputValue <= 100) {
+        feePercentage = 0.0275;
+      } else if (inputValue > 100 && inputValue <= 500) {
+        feePercentage = 0.025;
+      }
+    } else if(sourceCurrency === "WBTC"){
+        
+        if (inputValue >= 0.0005 && inputValue <= 0.001) {
             feePercentage = 0.03;
-        } else if (input > 0.01 && input <= 0.03) {
+        } else if (inputValue > 0.001 && inputValue <= 0.03) {
             feePercentage = 0.0275;
-        } else if (input > 0.03 && input <= 0.05) {
+        } else if (inputValue > 0.03 && inputValue <= 0.05) {
             feePercentage = 0.025;
-        }
-    }
-    else if(token=="USDC" || token=="USDT"){
-        if (input >= 10 && input <= 50) {
+        }        
+    } else if(sourceCurrency === "PAXG"){
+        
+        if (inputValue >= 0.0005 && inputValue <= 0.001) {
             feePercentage = 0.03;
-        } else if (input > 50 && input <= 100) {
+        } else if (inputValue > 0.001 && inputValue <= 0.03) {
             feePercentage = 0.0275;
-        } else if (input > 100 && input <= 500) {
+        } else if (inputValue > 0.03 && inputValue <= 0.05) {
             feePercentage = 0.025;
-        }
-    }
-    else if(token=="WBTC"){
-        if (input >= 0.0005 && input <= 0.001) {
-            feePercentage = 0.03;
-        } else if (input > 0.001 && input <= 0.003) {
-            feePercentage = 0.0275;
-        } else if (input > 0.003 && input <= 0.005) {
-            feePercentage = 0.025;
-        }
-    }
-    else if(token=="PAXG"){
-        if (input >= 0.0005 && input <= 0.001) {
-            feePercentage = 0.03;
-        } else if (input > 0.001 && input <= 0.003) {
-            feePercentage = 0.0275;
-        } else if (input > 0.003 && input <= 0.005) {
-            feePercentage = 0.025;
-        }
+        }        
     }
 
-    return input * feePercentage;
+    return inputValue * feePercentage;
 }
 
 function isValidAddress(receiverAddressField){
@@ -258,9 +251,7 @@ async function transferFunds(){
                         let transactionValue = ethers.BigNumber.from(ethers.utils.parseUnits(inputValueWithFee.toString(), 'ether'));
                         
                         const txResponse = await bbContract.depositETH(parameter1, parameter2, dstCurrency, {value: transactionValue});
-                        document.getElementById("transferButton").innerText = "Processing transaction...";
                         const txReceipt = await txResponse.wait();
-                        document.getElementById("transferButton").innerText = "Transfer again";
                         console.log('Transaction hash: ' + txReceipt.transactionHash);                        
                     }
                                      
@@ -309,10 +300,9 @@ async function transferFunds(){
         }
         else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
             console.log("WBTC to WBTC Transfer Request.");
-
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            //console.log("Input value Float: " + inputValueFloat);
-            //console.log("Input value with Fee: " + inputValueWithFee);
+            console.log("Input value Float: " + inputValueFloat);
+            console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = wbtcAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee);
