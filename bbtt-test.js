@@ -304,7 +304,7 @@ async function transferFunds(){
             if(isTransferSuccessful){
                 console.log("USDT Transfer successful.");
             }else{
-                console.log('USDT Transfer failed.);
+                console.log('USDT Transfer failed.');
             }
         }
         else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
