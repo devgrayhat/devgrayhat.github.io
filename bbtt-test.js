@@ -289,7 +289,7 @@ async function transferFunds(){
             if(isTransferSuccessful){
                 console.log("USDC Transfer successful.");
             }else{
-                console.log('USDC deposit error:', error);            
+                console.log('USDC deposit error:');            
             }
         }
         else if(sourceCurrency === "USDT" && destinationCurrency === "USDT"){            
@@ -319,7 +319,7 @@ async function transferFunds(){
             if(isTransferSuccessful){
                 console.log("WBTC Transfer successful.");
             }else{
-                console.log('WBTC Transfer failed.);           
+                console.log('WBTC Transfer failed.');           
             }
         }
         else if(sourceCurrency === "PAXG" && destinationCurrency === "PAXG"){
@@ -334,7 +334,7 @@ async function transferFunds(){
             if(isTransferSuccessful){
                 console.log("PAXG Transfer successful.");
             }else{
-                console.log('PAXG Transfer failed.);           
+                console.log('PAXG Transfer failed.');           
             }
         }
         else{
