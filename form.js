@@ -1,39 +1,66 @@
-function inputValidation(inp){
+function handleCurrencyChange() {
+    document.getElementById("inputAmount").value = '';
+    document.querySelector(".fee").innerHTML = '-';
+    document.querySelector(".totalValue").innerHTML = '-';
+    document.querySelector(".eth-submit").innerHTML = `Transfer`;
+    document.getElementById("destinationCurrency").value = document.getElementById("sourceCurrency").value;
+}
+
+function inputValidation(input) {
     let fee;
     let feePercentage;
-    const inputValue = parseFloat(inp.value);
-    /*
-    if(inputValue>=0.005 && inputValue<=0.01){feePercentage = 0.03;}
-    else if(inputValue>0.01 && inputValue<=0.03){feePercentage = 0.0275;}
-    else if(inputValue>0.03 && inputValue<=0.05){feePercentage = 0.025;}
-    
-   */
-    
-    if(inputValue>=0.5 && inputValue<=1){feePercentage = 0.03;}
-    else if(inputValue>1 && inputValue<=3){feePercentage = 0.0275;}
-    else if(inputValue>3 && inputValue<=5){feePercentage = 0.025;}
-
-    /*
-    //Disabled for now
-    //else if(inputValue>5 && inputValue<=10){feePercentage = 0.02;}
-    //else if(inputValue>10 && inputValue<=20){feePercentage = 0.015;}
-    //else if(inputValue>20){inputValue = 0.01;}
-    */
-
-    fee = feePercentage*inputValue;
-    document.querySelector('.fee').innerHTML = fee.toFixed(5);
-    document.querySelector('.totalValue').innerHTML = (inputValue + fee).toFixed(5);
-    document.querySelector(".eth-submit").innerHTML=`Transfer ${(inputValue + fee).toFixed(5)}`  ;  
-    
-    if(isNaN(fee))
-    {
-        document.getElementById("transferButton").disabled = true;
-        document.getElementById("transferButton").innerText = "Transfer";        
-    }    
-    else
-        document.getElementById("transferButton").disabled = false;
-    
+    const inputValue = parseFloat(input.value);
+    const sourceCurrency = document.getElementById("sourceCurrency").value;    
+  
+    if (sourceCurrency === "ETH") {
+      if (inputValue >= ETH_LIMIT_1 && inputValue <= ETH_LIMIT_2) {
+        feePercentage = 0.03;
+      } else if (inputValue > ETH_LIMIT_2 && inputValue <= ETH_LIMIT_3) {
+        feePercentage = 0.0275;
+      } else if (inputValue > ETH_LIMIT_3 && inputValue <= ETH_LIMIT_4) {
+        feePercentage = 0.025;
+      }
+    } else if (sourceCurrency === "USDC" || sourceCurrency === "USDT") {
+      if (inputValue >= USD_LIMIT_1 && inputValue <= USD_LIMIT_2) {
+        feePercentage = 0.03;
+      } else if (inputValue > USD_LIMIT_2 && inputValue <= USD_LIMIT_3) {
+        feePercentage = 0.0275;
+      } else if (inputValue > USD_LIMIT_3 && inputValue <= USD_LIMIT_4) {
+        feePercentage = 0.025;
+      }
+    } else if(sourceCurrency === "WBTC"){
+        
+        if (inputValue >= WBTC_LIMIT_1 && inputValue <= WBTC_LIMIT_2) {
+            feePercentage = 0.03;
+        } else if (inputValue > WBTC_LIMIT_2 && inputValue <= WBTC_LIMIT_3) {
+            feePercentage = 0.0275;
+        } else if (inputValue > WBTC_LIMIT_3 && inputValue <= WBTC_LIMIT_4) {
+            feePercentage = 0.025;
+        }        
+    } else if(sourceCurrency === "PAXG"){
+        
+        if (inputValue >= PAXG_LIMIT_1 && inputValue <= PAXG_LIMIT_2) {
+            feePercentage = 0.03;
+        } else if (inputValue > PAXG_LIMIT_2 && inputValue <= PAXG_LIMIT_3) {
+            feePercentage = 0.0275;
+        } else if (inputValue > PAXG_LIMIT_3 && inputValue <= PAXG_LIMIT_4) {
+            feePercentage = 0.025;
+        }
+    }
+  
+    fee = feePercentage * inputValue;
+    document.querySelector(".fee").innerHTML = fee.toFixed(5);
+    document.querySelector(".totalValue").innerHTML = (inputValue + fee).toFixed(5);
+    document.querySelector(".eth-submit").innerHTML = `Transfer ${(inputValue + fee).toFixed(5)}`;
+  
+    if (isNaN(fee)) {
+      document.getElementById("transferButton").disabled = true;
+      document.getElementById("transferButton").innerText = "Transfer";
+    } else {
+      document.getElementById("transferButton").disabled = false;
+    }
 }
+  
 
 function showForm(btn, mainDiv){
     document.querySelectorAll('.form-toggle').forEach((item) => {

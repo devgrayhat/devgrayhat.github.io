@@ -1,16 +1,4 @@
-// Change contract address
-// Change usdcAddress
-// Change network to Mainnet in CheckMAinnet function
-// Change fee percentage in calculateFee function
-// Change Abi if smart contract is redeployed
-
-
-const minEthLimit = 0.005;         // Change to 0.5 for mainnet
-const maxEthLimit = 0.05125;       // Change to 5.125 for mainnet
-
-const minUsdLimit = 10;            // Change to 500 for mainnet
-const maxUsdLimit = 500;           // Change to 512500 for mainnet
-
+// Blackbox token transfers
 
 async function getProviderAndNetwork() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -20,9 +8,8 @@ async function getProviderAndNetwork() {
 }
 
 async function checkMainnet(network) {
-    if (network.chainId != 5) { // Chain ID : 5 for Goerli, change to 1 for mainnet
-        alert('Connect to the Goerli Testnet.');
-        //alert('Connect to the Mainnet.'); // Chain ID : 1
+    if (network.chainId != NETWORK_ID) {
+        alert('Check your network.');
         return false;
     }
     return true;
@@ -40,7 +27,6 @@ async function connectWallet() {
     if (!await checkMainnet(network)) {
         return;
     }
-
     updateWalletBalance(provider);
 }
 
@@ -50,50 +36,47 @@ function calculateFee(sourceCurrency, input) {
     const inputValue = parseFloat(input).toFixed(5);
   
     if (sourceCurrency === "ETH") {
-      if (inputValue >= 0.005 && inputValue <= 0.01) {
+      if (inputValue >= ETH_LIMIT_1 && inputValue <= ETH_LIMIT_2) {
         feePercentage = 0.03;
-      } else if (inputValue > 0.01 && inputValue <= 0.03) {
+      } else if (inputValue > ETH_LIMIT_2 && inputValue <= ETH_LIMIT_3) {
         feePercentage = 0.0275;
-      } else if (inputValue > 0.03 && inputValue <= 0.05) {
+      } else if (inputValue > ETH_LIMIT_3 && inputValue <= ETH_LIMIT_4) {
         feePercentage = 0.025;
       }
     } else if (sourceCurrency === "USDC" || sourceCurrency === "USDT") {
-      if (inputValue >= 10 && inputValue <= 50) {
+      if (inputValue >= USD_LIMIT_1 && inputValue <= USD_LIMIT_2) {
         feePercentage = 0.03;
-      } else if (inputValue > 50 && inputValue <= 100) {
+      } else if (inputValue > USD_LIMIT_2 && inputValue <= USD_LIMIT_3) {
         feePercentage = 0.0275;
-      } else if (inputValue > 100 && inputValue <= 500) {
+      } else if (inputValue > USD_LIMIT_3 && inputValue <= USD_LIMIT_4) {
         feePercentage = 0.025;
       }
     } else if(sourceCurrency === "WBTC"){
         
-        if (inputValue >= 0.0005 && inputValue <= 0.001) {
+        if (inputValue >= WBTC_LIMIT_1 && inputValue <= WBTC_LIMIT_2) {
             feePercentage = 0.03;
-        } else if (inputValue > 0.001 && inputValue <= 0.03) {
+        } else if (inputValue > WBTC_LIMIT_2 && inputValue <= WBTC_LIMIT_3) {
             feePercentage = 0.0275;
-        } else if (inputValue > 0.03 && inputValue <= 0.05) {
+        } else if (inputValue > WBTC_LIMIT_3 && inputValue <= WBTC_LIMIT_4) {
             feePercentage = 0.025;
         }        
     } else if(sourceCurrency === "PAXG"){
         
-        if (inputValue >= 0.0005 && inputValue <= 0.001) {
+        if (inputValue >= PAXG_LIMIT_1 && inputValue <= PAXG_LIMIT_2) {
             feePercentage = 0.03;
-        } else if (inputValue > 0.001 && inputValue <= 0.03) {
+        } else if (inputValue > PAXG_LIMIT_2 && inputValue <= PAXG_LIMIT_3) {
             feePercentage = 0.0275;
-        } else if (inputValue > 0.03 && inputValue <= 0.05) {
+        } else if (inputValue > PAXG_LIMIT_3 && inputValue <= PAXG_LIMIT_4) {
             feePercentage = 0.025;
-        }        
+        }
     }
 
     return inputValue * feePercentage;
 }
 
 function isValidAddress(receiverAddressField){
-    //const receiverAddressField = document.getElementById("receiverAddress");
-
     const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/;
     if (receiverAddressField && receiverAddressField.value.trim() !== "" && ethAddressRegex.test(receiverAddressField.value)){
-        console.log("Valid Address: ", receiverAddressField.value);
         return true;
     } 
     else{
@@ -151,12 +134,6 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
             throw err;
         }
     }
-
-    /*
-    await openpgp.readMessage({
-        armoredMessage: encryptedAddress // parse armored message
-    });
-    */
     return encryptedAddress;
 }
 
@@ -172,15 +149,15 @@ function getDestinationCurrency() {
 
 function getTransactionValue() {    
     const inputAmountField = document.getElementById("inputAmount");
-    const inputAmount = inputAmountField.value; // amount of Ether to send
+    const inputAmount = inputAmountField.value;
     const inputValueFloat = parseFloat(inputAmount);
     const inputValueInWei = ethers.utils.parseEther(inputAmount);
 
     const resultField = document.getElementById("totalValue");
-    const resultAmount = resultField.innerText; // amount of Ether to send
+    const resultAmount = resultField.innerText;
     const resultValueFloat = parseFloat(resultAmount);
     const resultAmountInWei = ethers.utils.parseEther(resultAmount);
-    
+  
     let inputValueWithFee;
     const inputValueFloatBN = ethers.BigNumber.from(ethers.utils.parseUnits(inputValueFloat.toString(), 'ether'));
     const feeBN = ethers.BigNumber.from(ethers.utils.parseUnits(calculateFee(inputValueFloat).toString(), 'ether'));
@@ -231,7 +208,7 @@ async function transferFunds(){
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
             
             if (isValidInputEthValue()) {
-                dstCurrency = ethAddress;   // Token address for ETH
+                dstCurrency = ethAddress;
 
                 const parameter1 = encryptedAddress;      
                 const parameter2 = inputValueInWei;
@@ -254,8 +231,7 @@ async function transferFunds(){
                         const txReceipt = await txResponse.wait();
                         console.log('Transaction hash: ' + txReceipt.transactionHash);                        
                     }
-                                     
-                    alert('Successfully transferred to BlackBox. \nYou will received your funds within 5 minutes in your destination wallet.');
+                    
                     updateWalletBalance(provider);
                 } catch (error) {
                     console.log('ETH deposit error:', error);            
@@ -271,9 +247,7 @@ async function transferFunds(){
             console.log("USDC to USDC Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat);
-            console.log("Input value with Fee: " + inputValueWithFee);
-            dstCurrency = usdcAddress;   // Token address for USDC
+            dstCurrency = usdcAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(usdcAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
                         
@@ -287,8 +261,6 @@ async function transferFunds(){
             console.log("USDT to USDT Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
-            //console.log("Input value Float: " + inputValueFloat);
-            //console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = usdtAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(usdtAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
@@ -301,8 +273,6 @@ async function transferFunds(){
         else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
             console.log("WBTC to WBTC Transfer Request.");
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat.toFixed(5));
-            console.log("Input value with Fee: " + inputValueWithFee.toFixed(5));
             dstCurrency = wbtcAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
@@ -316,8 +286,6 @@ async function transferFunds(){
             console.log("PAXG to PAXG Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            //console.log("Input value Float: " + inputValueFloat);
-            //console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = paxgAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(paxgAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
@@ -335,7 +303,7 @@ async function transferFunds(){
 
     }
     else{
-        //alert('Invalid address. Try again. ');
+        alert('Invalid address. Try again. ');
     }
 
 
