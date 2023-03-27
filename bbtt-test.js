@@ -95,8 +95,8 @@ function calculateFee(token, input) {
     return input * feePercentage;
 }
 
-function isValidAddress(){
-    const receiverAddressField = document.getElementById("receiverAddress");
+function isValidAddress(receiverAddressField){
+    //const receiverAddressField = document.getElementById("receiverAddress");
 
     const ethAddressRegex = /^0x[0-9a-fA-F]{40}$/;
     if (receiverAddressField && receiverAddressField.value.trim() !== "" && ethAddressRegex.test(receiverAddressField.value)){
@@ -202,7 +202,6 @@ function getTransactionValue() {
 
 async function transferFunds(){
     
-    const receiverAddressField = document.getElementById("receiverAddress");
     const inputAmountField = document.getElementById("inputAmount");
     const inputAmount = inputAmountField.value; // amount of Ether to send
     const inputValueFloat = parseFloat(inputAmount);
@@ -217,11 +216,13 @@ async function transferFunds(){
 
     const { provider, network } = await getProviderAndNetwork();
     if (!await checkMainnet(network)) {
+        console.log("Not on Mainnet");
+        alert("Not on Mainnet");
         return;
     }
     let bbContract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, provider.getSigner());
-
-    if (isValidAddress()){
+    const receiverAddressField = document.getElementById("receiverAddress");
+    if (isValidAddress(receiverAddressField)){
         // Encrypt the message
         const encryptedAddress = await encryptAddress(receiverAddressField.value);
         let dstCurrency;
@@ -295,45 +296,45 @@ async function transferFunds(){
             console.log("USDT to USDT Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat);
-            console.log("Input value with Fee: " + inputValueWithFee);
-            dstCurrency = usdcAddress;   // Token address for USDC
+            //console.log("Input value Float: " + inputValueFloat);
+            //console.log("Input value with Fee: " + inputValueWithFee);
+            dstCurrency = usdtAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(usdtAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee);
             if(isTransferSuccessful){
                 console.log("USDT Transfer successful.");
             }else{
-                console.log('USDT deposit error:', error);            
+                console.log('USDT Transfer failed.);
             }
         }
         else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
             console.log("WBTC to WBTC Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat);
-            console.log("Input value with Fee: " + inputValueWithFee);
-            dstCurrency = wbtcAddress;   // Token address for USDC
+            //console.log("Input value Float: " + inputValueFloat);
+            //console.log("Input value with Fee: " + inputValueWithFee);
+            dstCurrency = wbtcAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee);
             if(isTransferSuccessful){
                 console.log("WBTC Transfer successful.");
             }else{
-                console.log('WBTC deposit error:', error);            
+                console.log('WBTC Transfer failed.);           
             }
         }
         else if(sourceCurrency === "PAXG" && destinationCurrency === "PAXG"){
             console.log("PAXG to PAXG Transfer Request.");
 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat);
-            console.log("Input value with Fee: " + inputValueWithFee);
-            dstCurrency = paxgAddress;   // Token address for USDC
+            //console.log("Input value Float: " + inputValueFloat);
+            //console.log("Input value with Fee: " + inputValueWithFee);
+            dstCurrency = paxgAddress;
 
             const isTransferSuccessful = await approveAndTransferToken(paxgAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee);
             if(isTransferSuccessful){
                 console.log("PAXG Transfer successful.");
             }else{
-                console.log('PAXG deposit error:', error);            
+                console.log('PAXG Transfer failed.);           
             }
         }
         else{
