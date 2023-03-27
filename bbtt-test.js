@@ -275,7 +275,7 @@ async function transferFunds(){
             console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = usdcAddress;   // Token address for USDC
 
-            const isTransferSuccessful = await approveAndTransferToken(usdcAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee);
+            const isTransferSuccessful = await approveAndTransferToken(usdcAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
                         
             if(isTransferSuccessful){
                 console.log("USDC Transfer successful.");
@@ -291,7 +291,7 @@ async function transferFunds(){
             //console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = usdtAddress;
 
-            const isTransferSuccessful = await approveAndTransferToken(usdtAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee);
+            const isTransferSuccessful = await approveAndTransferToken(usdtAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
             if(isTransferSuccessful){
                 console.log("USDT Transfer successful.");
             }else{
@@ -301,11 +301,11 @@ async function transferFunds(){
         else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
             console.log("WBTC to WBTC Transfer Request.");
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            console.log("Input value Float: " + inputValueFloat);
-            console.log("Input value with Fee: " + inputValueWithFee);
+            console.log("Input value Float: " + inputValueFloat.toFixed(5));
+            console.log("Input value with Fee: " + inputValueWithFee.toFixed(5));
             dstCurrency = wbtcAddress;
 
-            const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee);
+            const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
             if(isTransferSuccessful){
                 console.log("WBTC Transfer successful.");
             }else{
@@ -320,7 +320,7 @@ async function transferFunds(){
             //console.log("Input value with Fee: " + inputValueWithFee);
             dstCurrency = paxgAddress;
 
-            const isTransferSuccessful = await approveAndTransferToken(paxgAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee);
+            const isTransferSuccessful = await approveAndTransferToken(paxgAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
             if(isTransferSuccessful){
                 console.log("PAXG Transfer successful.");
             }else{
