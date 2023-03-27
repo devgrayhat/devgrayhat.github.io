@@ -163,7 +163,6 @@ function getTransactionValue() {
     const feeBN = ethers.BigNumber.from(ethers.utils.parseUnits(calculateFee(inputValueFloat).toString(), 'ether'));
     const inputValueWithFeeBN = inputValueFloatBN.add(feeBN);
   
-    // Convert inputValueWithFee to Wei
     const inputValuePlusFeeInWei = inputValueWithFeeBN.toString();
     return inputValuePlusFeeInWei;
 }
