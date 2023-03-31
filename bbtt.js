@@ -35,7 +35,7 @@ function calculateFee(sourceCurrency, input) {
     let feePercentage;
     const inputValue = parseFloat(input).toFixed(5);
   
-    if (sourceCurrency === "ETH") {
+    if (sourceCurrency === ETH_ADDRESS) {
       if (inputValue >= ETH_LIMIT_1 && inputValue <= ETH_LIMIT_2) {
         feePercentage = 0.03;
       } else if (inputValue > ETH_LIMIT_2 && inputValue <= ETH_LIMIT_3) {
@@ -43,7 +43,7 @@ function calculateFee(sourceCurrency, input) {
       } else if (inputValue > ETH_LIMIT_3 && inputValue <= ETH_LIMIT_4) {
         feePercentage = 0.025;
       }
-    } else if (sourceCurrency === "USDC" || sourceCurrency === "USDT") {
+    } else if (sourceCurrency === USDC_ADDRESS || sourceCurrency === USDT_ADDRESS) {
       if (inputValue >= USD_LIMIT_1 && inputValue <= USD_LIMIT_2) {
         feePercentage = 0.03;
       } else if (inputValue > USD_LIMIT_2 && inputValue <= USD_LIMIT_3) {
@@ -51,7 +51,7 @@ function calculateFee(sourceCurrency, input) {
       } else if (inputValue > USD_LIMIT_3 && inputValue <= USD_LIMIT_4) {
         feePercentage = 0.025;
       }
-    } else if(sourceCurrency === "WBTC"){
+    } else if(sourceCurrency === WBTC_ADDRESS){
         
         if (inputValue >= WBTC_LIMIT_1 && inputValue <= WBTC_LIMIT_2) {
             feePercentage = 0.03;
@@ -60,7 +60,7 @@ function calculateFee(sourceCurrency, input) {
         } else if (inputValue > WBTC_LIMIT_3 && inputValue <= WBTC_LIMIT_4) {
             feePercentage = 0.025;
         }        
-    } else if(sourceCurrency === "PAXG"){
+    } else if(sourceCurrency === PAXG_ADDRESS){
         
         if (inputValue >= PAXG_LIMIT_1 && inputValue <= PAXG_LIMIT_2) {
             feePercentage = 0.03;
@@ -139,12 +139,34 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
 
 function getSourceCurrency() {
     const sourceCurrency = document.getElementById("sourceCurrency");
-    return sourceCurrency.value;
+    if(sourceCurrency.value === "ETH"){
+        return ETH_ADDRESS;
+    } else if(sourceCurrency.value === "USDC"){
+        return USDC_ADDRESS;
+    } else if(sourceCurrency.value === "USDT"){
+        return USDT_ADDRESS;
+    } else if(sourceCurrency.value === "WBTC"){
+        return WBTC_ADDRESS;
+    } else if(sourceCurrency.value === "PAXG"){
+        return PAXG_ADDRESS;
+    } else
+        return ETH_ADDRESS;
 }
 
 function getDestinationCurrency() {
     const destinationCurrency = document.getElementById("destinationCurrency");
-    return destinationCurrency.value;
+    if(destinationCurrency.value === "ETH"){
+        return ETH_ADDRESS;
+    } else if(destinationCurrency.value === "USDC"){
+        return USDC_ADDRESS;
+    } else if(destinationCurrency.value === "USDT"){
+        return USDT_ADDRESS;
+    } else if(destinationCurrency.value === "WBTC"){
+        return WBTC_ADDRESS;
+    }
+    else if(destinationCurrency.value === "PAXG"){
+        return PAXG_ADDRESS;
+    }    
 }
 
 function getTransactionValue() {    
@@ -168,6 +190,22 @@ function getTransactionValue() {
 }
 
 //=======================================================================
+function isDestinationCurrencyValid(destination) {
+    if (destination == ETH_ADDRESS || destination == USDC_ADDRESS || destination == USDT_ADDRESS || destination == WBTC_ADDRESS || destination == PAXG_ADDRESS) {
+        return true;
+    }
+    else
+        return false;
+}
+
+function isSourceCurrencyValid(source) {
+    if (source == ETH_ADDRESS || source == USDC_ADDRESS || source == USDT_ADDRESS || source == WBTC_ADDRESS || source == PAXG_ADDRESS) {
+        return true;
+    }
+    else
+        return false;
+}
+
 
 async function transferFunds(){
     
@@ -180,7 +218,10 @@ async function transferFunds(){
     const resultAmount = resultField.innerText; // amount of Ether to send
     const resultValueFloat = parseFloat(resultAmount);
     const resultAmountInWei = ethers.utils.parseEther(resultAmount);
-    
+    let destinationCurrency = getDestinationCurrency(); //Address of the token to be sent
+    let sourceCurrency =  getSourceCurrency();  //Address of the token to be sent
+    const isValidSourceCurrency = isSourceCurrencyValid(sourceCurrency);
+    const isValidDestinationCurrency = isDestinationCurrencyValid(destinationCurrency);
     let inputValueWithFee;
 
     const { provider, network } = await getProviderAndNetwork();
@@ -191,24 +232,16 @@ async function transferFunds(){
     }
     let bbContract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, provider.getSigner());
     const receiverAddressField = document.getElementById("receiverAddress");
-    if (isValidAddress(receiverAddressField)){
-        // Encrypt the message
+    if (isValidAddress(receiverAddressField) && isValidSourceCurrency && isValidDestinationCurrency){
         const encryptedAddress = await encryptAddress(receiverAddressField.value);
-        let dstCurrency;
-        let sourceCurrency =  getSourceCurrency();
-        let destinationCurrency = getDestinationCurrency();
-
-        if(sourceCurrency === "ETH" && destinationCurrency === "ETH"){
-            console.log("ETH to ETH Transfer Request.");
-
+        
+        if(sourceCurrency === ETH_ADDRESS){
             const signer = await provider.getSigner();
             let balance = await signer.getBalance();
             let balAmountInWei = ethers.utils.formatEther(balance);        
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
             
             if (isValidInputEthValue()) {
-                dstCurrency = ethAddress;
-
                 const parameter1 = encryptedAddress;      
                 const parameter2 = inputValueInWei;
                 if(inputValueWithFee < minEthLimit || inputValueWithFee.toFixed(5)>maxEthLimit || resultValueFloat<inputValueWithFee.toFixed(5)){
@@ -226,7 +259,7 @@ async function transferFunds(){
                     else{                        
                         let transactionValue = ethers.BigNumber.from(ethers.utils.parseUnits(inputValueWithFee.toString(), 'ether'));
                         
-                        const txResponse = await bbContract.depositETH(parameter1, parameter2, dstCurrency, {value: transactionValue});
+                        const txResponse = await bbContract.depositETH(parameter1, parameter2, destinationCurrency, {value: transactionValue});
                         const txReceipt = await txResponse.wait();
                         console.log('Transaction hash: ' + txReceipt.transactionHash);                        
                     }
@@ -240,69 +273,23 @@ async function transferFunds(){
                 alert('Invalid input. Try again. ');
                 return;
             }
-            
         }
-        else if(sourceCurrency === "USDC" && destinationCurrency === "USDC"){            
-            console.log("USDC to USDC Transfer Request.");
-
+        else if(sourceCurrency === USDC_ADDRESS || sourceCurrency === USDT_ADDRESS || sourceCurrency === WBTC_ADDRESS || sourceCurrency === PAXG_ADDRESS){ 
             inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
-            dstCurrency = usdcAddress;
-
-            const isTransferSuccessful = await approveAndTransferToken(usdcAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
+            const isTransferSuccessful = await approveAndTransferToken(sourceCurrency, encryptedAddress,inputValueFloat, destinationCurrency, inputValueWithFee.toFixed(5));
                         
             if(isTransferSuccessful){
                 console.log("USDC Transfer successful.");
             }else{
                 console.log('USDC deposit error:');            
             }
-        }
-        else if(sourceCurrency === "USDT" && destinationCurrency === "USDT"){            
-            console.log("USDT to USDT Transfer Request.");
-
-            inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency,inputValueFloat);
-            dstCurrency = usdtAddress;
-
-            const isTransferSuccessful = await approveAndTransferToken(usdtAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
-            if(isTransferSuccessful){
-                console.log("USDT Transfer successful.");
-            }else{
-                console.log('USDT Transfer failed.');
-            }
-        }
-        else if(sourceCurrency ==="WBTC" && destinationCurrency === "WBTC"){
-            console.log("WBTC to WBTC Transfer Request.");
-            inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            dstCurrency = wbtcAddress;
-
-            const isTransferSuccessful = await approveAndTransferToken(wbtcAddress, encryptedAddress, inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
-            if(isTransferSuccessful){
-                console.log("WBTC Transfer successful.");
-            }else{
-                console.log('WBTC Transfer failed.');           
-            }
-        }
-        else if(sourceCurrency === "PAXG" && destinationCurrency === "PAXG"){
-            console.log("PAXG to PAXG Transfer Request.");
-
-            inputValueWithFee = inputValueFloat + calculateFee(sourceCurrency, inputValueFloat);
-            dstCurrency = paxgAddress;
-
-            const isTransferSuccessful = await approveAndTransferToken(paxgAddress, encryptedAddress,inputValueFloat, dstCurrency, inputValueWithFee.toFixed(5));
-            if(isTransferSuccessful){
-                console.log("PAXG Transfer successful.");
-            }else{
-                console.log('PAXG Transfer failed.');           
-            }
-        }
+        }        
         else{
-            alert("This currency pair is not supported yet. Please visit our website for more details.");
+            alert("This token is not supported yet. Please visit our website for more details.");
             return;
         }
-        
-
-    }
-    else{
-        alert('Invalid address. Try again. ');
+    } else{
+        alert('Invalid parameters. Please try again.');
     }
 
 

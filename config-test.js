@@ -34,12 +34,10 @@ const erc20ABI = [
   "function allowance(address owner, address spender) external view returns (uint256)"
 ];
 
-// You should replace these constants with the appropriate values
-//const USDC_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 const CONTRACT_ADDRESS = "0x06cec798ec90aa79a023b40b716d32577d9d0b8d";
-const ethAddress = "0x0000000000000000000000000000000000000000";
-const usdcAddress = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F";
-const usdtAddress = "0xC2C527C0CACF457746Bd31B2a698Fe89de2b6d49";
-const wbtcAddress = "0xC04B0d3107736C32e19F1c62b2aF67BE61d63a05";
-const paxgAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"; //Chain Link address
+const ETH_Address = "0x0000000000000000000000000000000000000000";
+const USDC_Address = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F";
+const USDT_Address = "0xC2C527C0CACF457746Bd31B2a698Fe89de2b6d49";
+const WBTC_Address = "0xC04B0d3107736C32e19F1c62b2aF67BE61d63a05";
+const PAXG_Address = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"; //Chain Link address
 

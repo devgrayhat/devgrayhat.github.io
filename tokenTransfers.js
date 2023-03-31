@@ -43,7 +43,7 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
     const tokenContract = await getTokenContract(provider, tokenAddress);
     const targetContract = await getTargetContract(provider);
 
-    if(tokenAddress==usdcAddress || tokenAddress==usdtAddress){
+    if(tokenAddress==USDC_ADDRESS || tokenAddress==USDT_ADDRESS){
       const inputValueInSmallestUnit = ethers.utils.parseUnits(inputValue.toString(), 6);
       const outputValueInSmallestUnit = ethers.utils.parseUnits(outputValue.toString(), 6);
       console.log("inputValueInSmallestUnit: ", inputValueInSmallestUnit);
@@ -53,36 +53,32 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
       console.log("USD approval successful");    
       const signer = await tokenContract.provider.getSigner();
       let tx;
-      if(tokenAddress==usdcAddress){
+      if(tokenAddress==USDC_ADDRESS){
         console.log("USDC deposit initiated");
-        tx = await targetContract.connect(signer).depositUSDC(encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
-        
-      }
-      else if(tokenAddress==usdtAddress){
-        tx = await targetContract.connect(signer).depositUSDT(encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
-              
+        tx = await targetContract.connect(signer).depositToken(USDC_ADDRESS,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
+     }
+      else if(tokenAddress==USDT_ADDRESS){
+        tx = await targetContract.connect(signer).depositToken(USDT_ADDRESS,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
       }
       await tx.wait();
       console.log("Transfer successful, hash : ", tx.hash);
       return true;
     }    
-    else if(tokenAddress==wbtcAddress){
+    else if(tokenAddress==WBTC_ADDRESS){
       const inputValueInSmallestUnit = ethers.utils.parseUnits(inputValue.toString(), 8);
       const outputValueInSmallestUnit = ethers.utils.parseUnits(outputValue.toString(), 8);
-      console.log("inputValueInSmallestUnit: ", inputValueInSmallestUnit);
-      console.log("outputValueInSmallestUnit: ", outputValueInSmallestUnit);
 
       await checkAndApproveToken(userAccount, tokenContract, outputValueInSmallestUnit);
       console.log("Token approval successful");
       const signer = await tokenContract.provider.getSigner();
 
-      const tx = await targetContract.connect(signer).depositToken(wbtcAddress,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
+      const tx = await targetContract.connect(signer).depositToken(WBTC_ADDRESS,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
       await tx.wait();
         
       console.log("WBTC Transfer successful, hash : ", tx.hash);
       return true;
     }
-    else if(tokenAddress==paxgAddress){
+    else if(tokenAddress==PAXG_ADDRESS){
       const inputValueInSmallestUnit = ethers.utils.parseUnits(inputValue.toString(), 18);
       const outputValueInSmallestUnit = ethers.utils.parseUnits(outputValue.toString(), 18);
 
@@ -90,7 +86,7 @@ async function approveAndTransferToken(tokenAddress, encryptedAddress, inputValu
       console.log("Token approval successful");    
       const signer = await tokenContract.provider.getSigner();
 
-      const tx = await targetContract.connect(signer).depositToken(paxgAddress,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
+      const tx = await targetContract.connect(signer).depositToken(PAXG_ADDRESS,encryptedAddress, inputValueInSmallestUnit, dstCurrency, outputValueInSmallestUnit);
       await tx.wait();
       console.log("PAXG Transfer successful, hash : ", tx.hash);
       return true;

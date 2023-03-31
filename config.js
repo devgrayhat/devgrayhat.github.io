@@ -35,8 +35,8 @@ const erc20ABI = [
   "function allowance(address owner, address spender) external view returns (uint256)"
 ];
 
-const ethAddress = "0x0000000000000000000000000000000000000000";
-const usdcAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-const usdtAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-const wbtcAddress = "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599";
-const paxgAddress = "0x45804880De22913dAFE09f4980848ECE6EcbAf78";
+const ETH_Address = "0x0000000000000000000000000000000000000000";
+const USDC_Address = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
+const USDT_Address = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+const WBTC_Address = "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599";
+const PAXG_Address = "0x45804880De22913dAFE09f4980848ECE6EcbAf78";
