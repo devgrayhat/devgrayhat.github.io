@@ -30,6 +30,39 @@ async function connectWallet() {
     updateWalletBalance(provider);
 }
 
+
+function getSourceCurrency() {
+    const sourceCurrency = document.getElementById("sourceCurrency");
+    if(sourceCurrency.value === "ETH"){
+        return ETH_ADDRESS;
+    } else if(sourceCurrency.value === "USDC"){
+        return USDC_ADDRESS;
+    } else if(sourceCurrency.value === "USDT"){
+        return USDT_ADDRESS;
+    } else if(sourceCurrency.value === "WBTC"){
+        return WBTC_ADDRESS;
+    } else if(sourceCurrency.value === "PAXG"){
+        return PAXG_ADDRESS;
+    } else
+        return ETH_ADDRESS;
+}
+
+function getDestinationCurrency() {
+    const destinationCurrency = document.getElementById("destinationCurrency");
+    if(destinationCurrency.value === "ETH"){
+        return ETH_ADDRESS;
+    } else if(destinationCurrency.value === "USDC"){
+        return USDC_ADDRESS;
+    } else if(destinationCurrency.value === "USDT"){
+        return USDT_ADDRESS;
+    } else if(destinationCurrency.value === "WBTC"){
+        return WBTC_ADDRESS;
+    }
+    else if(destinationCurrency.value === "PAXG"){
+        return PAXG_ADDRESS;
+    }    
+}
+
 function calculateFee(sourceCurrency, input) {
     let fee;
     let feePercentage;
@@ -137,37 +170,6 @@ A8O/zU1onN/4pGULuunQV79xBUHOZ+DPGwxLRfwAdA==
     return encryptedAddress;
 }
 
-function getSourceCurrency() {
-    const sourceCurrency = document.getElementById("sourceCurrency");
-    if(sourceCurrency.value === "ETH"){
-        return ETH_ADDRESS;
-    } else if(sourceCurrency.value === "USDC"){
-        return USDC_ADDRESS;
-    } else if(sourceCurrency.value === "USDT"){
-        return USDT_ADDRESS;
-    } else if(sourceCurrency.value === "WBTC"){
-        return WBTC_ADDRESS;
-    } else if(sourceCurrency.value === "PAXG"){
-        return PAXG_ADDRESS;
-    } else
-        return ETH_ADDRESS;
-}
-
-function getDestinationCurrency() {
-    const destinationCurrency = document.getElementById("destinationCurrency");
-    if(destinationCurrency.value === "ETH"){
-        return ETH_ADDRESS;
-    } else if(destinationCurrency.value === "USDC"){
-        return USDC_ADDRESS;
-    } else if(destinationCurrency.value === "USDT"){
-        return USDT_ADDRESS;
-    } else if(destinationCurrency.value === "WBTC"){
-        return WBTC_ADDRESS;
-    }
-    else if(destinationCurrency.value === "PAXG"){
-        return PAXG_ADDRESS;
-    }    
-}
 
 function getTransactionValue() {    
     const inputAmountField = document.getElementById("inputAmount");
