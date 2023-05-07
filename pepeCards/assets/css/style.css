@@ -129,7 +129,7 @@ h6 {
 
 #header.header-scrolled {
   background: rgba(41, 38, 35, 0.9);
-  height: 60px;
+  height: 100px;
 }
 
 #header .logo h1 {
@@ -202,7 +202,7 @@ h6 {
   height: 2px;
   bottom: 3px;
   left: 30px;
-  background-color: #63ad3c;
+  background-color: #ffaa47;
   visibility: hidden;
   width: 0px;
   transition: all 0.3s ease-in-out 0s;
