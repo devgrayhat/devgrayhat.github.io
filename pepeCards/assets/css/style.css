@@ -617,7 +617,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   font-family: "Kalam", sans-serif;
-  color: #6e4517;
+  color: #ffaa47;
 }
 
 /*--------------------------------------------------------------
@@ -749,7 +749,7 @@ section {
 }
 
 .about .video-box {
-  background: url("../img/pepe/pepe-buying.jpg") center center no-repeat;
+  background: url("../img/pepe/pond_art.png") center center no-repeat;
   background-size: contain;
   min-height: 300px;
 }
