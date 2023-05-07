@@ -149,7 +149,7 @@ h6 {
 #header .logo img {
   padding: 0;
   margin: 0;
-  max-height: 40px;
+  max-height: 80px;
 }
 
 /*--------------------------------------------------------------
@@ -437,7 +437,7 @@ h6 {
 
 #hero h1 span {
   color: #ffaa44;
-  border-bottom: 4px solid #1acc8d;
+  border-bottom: 4px solid #ffaa44;
 }
 
 #hero h2 {
@@ -456,11 +456,11 @@ h6 {
   border-radius: 50px;
   transition: 0.5s;
   color: #fff;
-  background: #ffaa44;
+  background: #292623;
 }
 
 #hero .btn-get-started:hover {
-  background: #ffaa44;
+  background: #ffaa47;
 }
 
 #hero .animated {
@@ -834,9 +834,9 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Features
+# socials
 --------------------------------------------------------------*/
-.features .icon-box {
+.socials .icon-box {
   display: flex;
   align-items: center;
   padding: 20px;
@@ -844,13 +844,13 @@ section {
   transition: ease-in-out 0.3s;
 }
 
-.features .icon-box i {
+.socials .icon-box i {
   font-size: 32px;
   padding-right: 10px;
   line-height: 1;
 }
 
-.features .icon-box h3 {
+.socials .icon-box h3 {
   font-weight: 700;
   margin: 0;
   padding: 0;
@@ -858,16 +858,16 @@ section {
   font-size: 16px;
 }
 
-.features .icon-box h3 a {
+.socials .icon-box h3 a {
   color: #fff;
   transition: ease-in-out 0.3s;
 }
 
-.features .icon-box h3 a:hover {
+.socials .icon-box h3 a:hover {
   color: #ffaa47;
 }
 
-.features .icon-box:hover {
+.socials .icon-box:hover {
   background: #63ad3c;
 }
 
