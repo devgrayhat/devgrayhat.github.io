@@ -21,20 +21,20 @@ async function cardInputValidation() {
   const inputCardType = document.getElementById("cardType").value;
 
   let inputValue = parseFloat(inputAmount);
-  let [userAddress, bbttBalance] = await getUserAddress();
-  updateUI(userAddress, bbttBalance);
+  let [userAddress, pepeCardBalance] = await getUserAddress();
+  updateUI(userAddress, pepeCardBalance);
   
   if(inputCardType === "mastercard") {
-    //console.log("bbttBalance : ", bbttBalance);
-    if(bbttBalance < 10000){
+    //console.log("pepeCardBalance : ", pepeCardBalance);
+    if(pepeCardBalance < 10000){
       fee = NaN;  // if balance is less than 10k
-    } else if (inputAmount == 250 && (bbttBalance >= 10000) && (bbttBalance < 25000)){
+    } else if (inputAmount == 250 && (pepeCardBalance >= 10000) && (pepeCardBalance < 25000)){
       fee = 20;
-    } else if (inputAmount == 500 && (bbttBalance >= 10000) && (bbttBalance < 50000)){
+    } else if (inputAmount == 500 && (pepeCardBalance >= 10000) && (pepeCardBalance < 50000)){
       fee = 36;
-    } else if (inputAmount == 250 && bbttBalance >= 25000){
+    } else if (inputAmount == 250 && pepeCardBalance >= 25000){
       fee = 0;
-    } else if (inputAmount == 500 && bbttBalance >= 50000){
+    } else if (inputAmount == 500 && pepeCardBalance >= 50000){
       fee = 0;
     } else {
       fee = NaN;
@@ -72,19 +72,20 @@ async function depositEvent() {
   const txnValue = document.querySelector(".totalValue").innerHTML
   let reqHash = 0;
   let response = {};
-  let [userAddress, bbttBalance] = await getUserAddress();
-  updateUI(userAddress, bbttBalance);
+  let [userAddress, pepeCardBalance] = await getUserAddress();
+
+  updateUI(userAddress, pepeCardBalance);
     
-  //console.log("bbttBalance : ", bbttBalance);
-  if(bbttBalance < 10000){
+  //console.log("pepeCardBalance : ", pepeCardBalance);
+  if(pepeCardBalance < 10000){
     fee = NaN;  // if balance is less than 10k
-  } else if (inputAmount == 250 && (bbttBalance >= 10000) && (bbttBalance < 25000)){
+  } else if (inputAmount == 250 && (pepeCardBalance >= 10000) && (pepeCardBalance < 25000)){
     fee = 20;
-  } else if (inputAmount == 500 && (bbttBalance >= 10000) && (bbttBalance < 50000)){
+  } else if (inputAmount == 500 && (pepeCardBalance >= 10000) && (pepeCardBalance < 50000)){
     fee = 36;
-  } else if (inputAmount == 250 && bbttBalance >= 25000){
+  } else if (inputAmount == 250 && pepeCardBalance >= 25000){
     fee = 0;
-  } else if (inputAmount == 500 && bbttBalance >= 50000){
+  } else if (inputAmount == 500 && pepeCardBalance >= 50000){
     fee = 0;
   } else {
     fee = NaN;

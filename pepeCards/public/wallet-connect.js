@@ -122,15 +122,15 @@ function updateUI(account, balance) {
   document.getElementById("connected-wallet-address").innerText = shortAddress;
   
   if(balance == undefined) {
-    document.getElementById("bbtt-balance").innerText = 0 + " BBTT";
+    document.getElementById("pepeCard-balance").innerText = 0 + " pepeCard";
     showAlert("info-alert");
     console.log("Token balance is undefined:", balance);
-  } else if (balance < MIN_BBTT_BALANCE) {
-    document.getElementById("bbtt-balance").innerText = balance.toFixed(0) + " BBTT";
+  } else if (balance < MIN_pepeCard_BALANCE) {
+    document.getElementById("pepeCard-balance").innerText = balance.toFixed(0) + " pepeCard";
     showAlert("info-token-balance-low");
     //console.log("Token balance is low:", balance.toFixed(2));
-  } else if(balance >= MIN_BBTT_BALANCE) {
-    document.getElementById("bbtt-balance").innerText = balance.toFixed(2) + " BBTT";
+  } else if(balance >= MIN_pepeCard_BALANCE) {
+    document.getElementById("pepeCard-balance").innerText = balance.toFixed(2) + " pepeCard";
     showAlert("info-token-balance-good");
     //console.log("Token balance is good:", balance.toFixed(2));
   }

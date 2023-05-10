@@ -76,14 +76,9 @@ async function makeGetRequest(endpoint) {
   function handleErrorResponse(data) {
     showAlert("info-error");
     console.error('Error issuing card:', (data && data.message) || 'Unknown error');
-    document.querySelector(".feeValueUsd").innerHTML = 0;
-    document.querySelector(".totalValue").innerHTML = 0;
+    
   
-    document.getElementById("cardType").options[0].innerText = "Select card type";
-    document.getElementById("cardType").value = "None";
-  
-    document.getElementById("inputAmount").options[0].innerText = "Enter amount";
-    document.getElementById("inputAmount").value = NaN;
+    
   }
 
  

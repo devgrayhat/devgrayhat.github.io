@@ -3,7 +3,6 @@ const axios = require('axios');
 const cors = require('cors');
 const XLSX = require('xlsx');
 const crypto = require('crypto');
-
 require('dotenv').config();
 
 const app = express();
@@ -15,7 +14,7 @@ let allowanceHash = '';
 
 const origin = process.env.NODE_ENV === 'production' 
   ? ['http://pepecard.cc', 'http://pepecard.cc', 'https://pepecard.cc', 'https://pepecard.cc']
-  : ['http://127.0.0.1:8001', 'http://localhost:8001'];
+  : ['http://127.0.0.1:8001', 'http://localhost:8001', 'http://89.116.229.245:8001', 'https://89.116.229.245:8001'];
 
 app.use(cors({
   origin,
