@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy $BBTT direct with FIAT</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet"> 
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body>
+    <header>
+        <div class="h-r">
+          <a href="">Home</a>
+          <a href="https://tokenblackboxs-organization.gitbook.io/blackboxtransfer/" target="_blank">Whitepaper</a>
+          <a href="prepaid.html">Prepaid Cards</a>
+          <a href="dapp.html" style="color:#97b0fc;">Anonymizer</a>
+        </div>
+        <div class="h-r-m">
+            <button class="header-btn"></button>  
+            <ul class="header-dropdown">
+                <div>
+                  <a href="">Home</a>
+                  <a href="https://tokenblackboxs-organization.gitbook.io/blackboxtransfer/" target="_blank">Whitepaper</a>
+                  <a href="prepaid.html">Prepaid Cards</a>
+                  <a href="dapp.html" style="color:#97b0fc;">Anonymizer</a>        
+                </div>
+            </ul>          
+        </div>
+
+    </header>
+    <div class="widget-page">
+        <span>
+            BlackBox is using <a href="https://flooz.trade/trade" target="_blank">Flooz.trade</a> to enable customers from round the world to buy BlackBox $BBTT tokens with no barriers. Blackbox is committed to providing privacy solutions and education to users around the world. Visit <a href="https://bbtt.io/">BBTT.io</a> for our anonymous cryptocurrency transfers, pre-paid cards, and much more.
+        </span>
+
+        <iframe src="https://flooz.trade/embed/trade?swapDisabled=false&swapToTokenAddress=0x92a8771C925ec0812325546075be51e76d2f7123&swapLockToToken=true&onRampDisabled=false&onRampAsDefault=true&onRampDefaultAmount=100&onRampTokenAddress=0x92a8771C925ec0812325546075be51e76d2f7123&network=eth&lightMode=false&primaryColor=%230000e3&backgroundColor=transparent&roundedCorners=19&padding=20&refId=aF8MNc" frameborder="0" allow="clipboard-read ; clipboard-write ; web-share ; accelerometer ; autoplay ; camera ; gyroscope ; payment ; geolocation *" class="wp-iframe"></iframe>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+    <script>
+        $(".header-btn").click((function(e){e.stopPropagation(),$(".header-dropdown").toggle()})),$(document).click((function(){$(".header-dropdown").hide()}));
+    </script>
+
+    
+</body>
+</html>

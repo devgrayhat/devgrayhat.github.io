@@ -1,0 +1,136 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: rgb(10, 10, 10);
+  padding: 30px 20px;
+  color: white;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Poppins, sans-serif;
+}
+
+@font-face {
+  font-family: "Aldrich";
+  src: url("/fonts/Aldrich-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kredit";
+  src: url("/fonts/kredit.otf") format("opentype");
+}
+
+.form-footer img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
+}
+
+a {
+  color: transparent;
+}
+
+a:hover {
+  color: transparent;
+}
+
+.form-select {
+  border-color: rgb(91, 91, 91); /* replace "red" with your desired color */
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: var(--bs-nav-tabs-link-active-color);
+  background-color: #97b0fc !important;;
+  border-color: var(--bs-nav-tabs-link-active-border-color);
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #343a40;
+  border: none;
+}
+
+.nav-tabs .nav-link:not(.active) {
+  color: #97b0fc;
+}
+
+.nav-tabs .nav-link,
+.nav-active {
+  color: #000000;
+}
+
+.tab-content {
+  background-color: #1a1d20;
+  padding: 10px;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.tab-pane p {
+  margin-top: 1rem;
+}
+
+select::selection {
+  color: #97b0fc;
+}
+
+
+
+@media print {
+  body * {
+    visibility: hidden;
+  }  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  #card-info-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    page-break-after: avoid;
+  }
+  #card-text-area, #card-text-area * , #card-canvas, #card-canvas *{
+    visibility: visible;
+    color: #333;
+  }
+  #editr {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  #card-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  #card-canvas {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  header, nav, footer {
+    display: none;
+  }
+}
+
+
+
+
+.scaled-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+a {
+  color: transparent !important;
+  text-decoration: none;
+}
