@@ -48,8 +48,8 @@ async function makeGetRequest(endpoint) {
   }
 
 
-  async function checkAllowance(amount, type, userAddress) {
-    const endpoint = 'cards/check_allowance';
+  async function checkAvailability(amount, type, userAddress) {
+    const endpoint = 'cards/check_availability';
     //console.log('Endpoint:', endpoint);
   
     const payload = {
@@ -69,7 +69,7 @@ async function makeGetRequest(endpoint) {
       }
     } catch (error) {
       handleErrorResponse();
-      console.error('Error in checkAllowance:', error);
+      console.error('Error in checkAvailability:', error);
     }
   }
   

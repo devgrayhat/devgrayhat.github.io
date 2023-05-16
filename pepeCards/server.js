@@ -91,7 +91,7 @@ app.post('/api/cards/:endpoint', (req, res) => {
       data[firstUnissuedCardIndex][buyerIPIndex] = buyerIP;
       const updatedSheet = XLSX.utils.aoa_to_sheet([header, ...data]);
       workbook.Sheets[sheetName] = updatedSheet;
-      XLSX.writeFile(workbook, 'cardsDB.xlsx');
+      XLSX.writeFile(workbook, 'pepeCards.xlsx');
 
     } else {
       response.success = 'false';
@@ -102,7 +102,7 @@ app.post('/api/cards/:endpoint', (req, res) => {
 
     console.log('Response : ', response);
     res.send(response);
-  } else if (req.params.endpoint === 'check_allowance') {
+  } else if (req.params.endpoint === 'check_availability') {
     console.log('New api call:', req.body);
     let cardAmount = req.body.amount;
     let cardType = req.body.type;
@@ -111,7 +111,7 @@ app.post('/api/cards/:endpoint', (req, res) => {
     const buyerIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;  
     console.log(`Buyer IP address is: ${buyerIP}`);
   
-    const workbook = XLSX.readFile('cardsDB.xlsx');
+    const workbook = XLSX.readFile('pepeCards.xlsx');
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
@@ -165,6 +165,9 @@ app.post('/api/cards/:endpoint', (req, res) => {
   
     console.log('Response : ', response);
     //res.send(response);
+  }
+  else{
+    res.status(404).send("Invalid Endpoint");
   }
 });
   
