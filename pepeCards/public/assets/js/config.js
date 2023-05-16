@@ -18,3 +18,9 @@ const erc20Abi = [
   "function balanceOf(address owner) view returns (uint256)",
   "function decimals() view returns (uint8)"
 ];
+
+const MIN_PEPE_L1 = 500000000.0;     // 500,000,000
+const MIN_PEPE_CARD_L1 = 50000000.0;  // minimum required PEPE Card balance
+const MIN_PEPE_CARD_L2 = 100000000.0; // minimum required PEPE Card balance 
+const MIN_PEPE_CARD_L3 = 150000000.0; // 150,000,000
+const MIN_PEPE_CARD_L4 = 200000000.0; // 200,000,000

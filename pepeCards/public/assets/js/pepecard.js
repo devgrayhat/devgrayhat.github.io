@@ -6,58 +6,37 @@ myLink.forEach(function(link) {
 });
 
 
-async function depositEth(balance) {
-
-  const minPepeL1 = 500000000.0;     // 500,000,000
-  const minPepeCardL1 = 50000000.0;  // minimum required PEPE Card balance
-  const minPepeCardL2 = 100000000.0; // minimum required PEPE Card balance 
-  const minPepeCardL3 = 150000000.0; // 150,000,000
-  const minPepeCardL4 = 200000000.0; // 200,000,000 
-
-    
-  //const cardType = document.getElementById("cardType").value;
-  //const inputAmount = document.getElementById("inputAmount").value;
-  //const txnValue = document.querySelector(".totalValue").innerHTML;
-  //let [userAddress, pepeCardBalance] = await getUserAddress();
-  
-    
-  //console.log("pepeCardBalance : ", pepeCardBalance);
-  if(balance.balancePepeInPepe < minPepeL1){
+async function depositEth(balance) {  
+  let fee = 0;  
+  if(balance.balancePepeInPepe < MIN_PEPE_L1){
     fee = NaN;  // if balance is less than 10k
-  } else if (balance.balancePepeInPepe >=minPepeL1 && balance.balancePepeCardInPepe < minPepeCardL1){
+  } else if (balance.balancePepeInPepe >=MIN_PEPE_L1 && balance.balancePepeCardInPepe < MIN_PEPE_CARD_L1){
     fee = 50;
-  } else if (balance.balancePepeInPepe >=minPepeL1 && (balance.balancePepeCardInPepe >= minPepeCardL1 && balance.balancePepeCardInPepe < minPepeCardL2)){
+  } else if (balance.balancePepeInPepe >=MIN_PEPE_L1 && (balance.balancePepeCardInPepe >= MIN_PEPE_CARD_L1 && balance.balancePepeCardInPepe < MIN_PEPE_CARD_L2)){
     fee = 45;
-  } else if (balance.balancePepeInPepe >=minPepeL1 && (balance.balancePepeCardInPepe >= minPepeCardL2 && balance.balancePepeCardInPepe < minPepeCardL3)){
+  } else if (balance.balancePepeInPepe >=MIN_PEPE_L1 && (balance.balancePepeCardInPepe >= MIN_PEPE_CARD_L2 && balance.balancePepeCardInPepe < MIN_PEPE_CARD_L3)){
     fee = 25;
-  } else if (balance.balancePepeInPepe >=minPepeL1 && (balance.balancePepeCardInPepe >= minPepeCardL3 && balance.balancePepeCardInPepe < minPepeCardL4)){
+  } else if (balance.balancePepeInPepe >=MIN_PEPE_L1 && (balance.balancePepeCardInPepe >= MIN_PEPE_CARD_L3 && balance.balancePepeCardInPepe < MIN_PEPE_CARD_L4)){
     fee = 15;
-  } else if (balance.balancePepeInPepe >=minPepeL1 && (balance.balancePepeCardInPepe >= minPepeCardL4)){
+  } else if (balance.balancePepeInPepe >=MIN_PEPE_L1 && (balance.balancePepeCardInPepe >= MIN_PEPE_CARD_L4)){
     fee = 0;
   } else {
     fee = NaN;
     //console.log("Invalid token balance");
   }
-  console.log("Fee : ", fee);
+  
   let inputValue = parseFloat(500);
-  let totalAmount = inputValue + fee;  
-  console.log("totalAmount : ", totalAmount);
-
+  let totalAmount = inputValue + fee;
   const convertedAmount = await convertUSDToETH(totalAmount);
   
   let cardType = 'mastercard';
-  let userAddress = '0x2dADE6Cc700AB5CA7f1709A4EcB5F3b1F9ADB885';
   let txnValue = convertedAmount.toString();
+  let userAddress = balance.address;
 
-
-  if(inputValue == 500) {
-    //console.log("inputValuesssss : ", inputValue);
-    response = await checkAvailability(inputValue, cardType, userAddress);
-    //console.log("responsessss : ", response);
+  if(inputValue == 500 && fee != NaN) {
+    response = await checkCardAvailability(inputValue, cardType, userAddress);
     if(response.success == 'true'){
-      //showAlert("info-pay");
       reqHash = response.message.hash;
-      console.log("reqHash : ", reqHash);
       try {
         const tx = await sendTransaction(txnValue);
         if (tx) {
@@ -136,51 +115,7 @@ async function convertUSDToETH(amountUSD) {
   }
 }
 
-  async function convertCurrency(amount, fromCurrency, toCurrency) {
-    // Try binance or a CEX API - ChainLink
-    //https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT : {"symbol":"ETHUSDT","price":"1838.12000000"}
-    //https://api.binance.com/api/v3/ticker/price?symbol=PEPEUSDT : {"symbol":"PEPEUSDT","price":"0.00000193"}
-    const resETHUSDT = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT");
-    const resPEPEUSDT = await fetch("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT");
-    const jsonETHUSDT = await resETHUSDT.json();
-    const jsonPEPEUSDT = await resPEPEUSDT.json();
-    let amountInSmallestUnit = 0;
-    let amountInFloat = 0;
   
-    const rates = {
-      [USDC_MAIN_ADDRESS]: {"price": 0.9995*json["tether"]?.usd},
-      [USDT_MAIN_ADDRESS]: {"usd": 0.9995*json["tether"]?.usd},
-      [ETH_MAIN_ADDRESS]: {"usd": 0.9995*json["ethereum"]?.usd},
-      [WBTC_MAIN_ADDRESS]: {"usd": 0.9995*json["wrapped-bitcoin"]?.usd},
-      [PAXG_MAIN_ADDRESS]: {"usd": 0.9995*json["pax-gold"]?.usd},
-    };
-    //console.log("Current rates : ",rates);
-    
-    if(fromCurrency == USDC_MAIN_ADDRESS || fromCurrency == USDT_MAIN_ADDRESS) {
-      amountInFloat = amount / 10**6;
-    } else if(fromCurrency == WBTC_MAIN_ADDRESS) {
-      amountInFloat = amount / 10**8;
-    } else if(fromCurrency == ETH_ADDRESS || fromCurrency == PAXG_MAIN_ADDRESS) {
-      amountInFloat = amount / 10**18;
-    }
-    
-    let convertedAmount = amountInFloat * rates[fromCurrency].usd / rates[toCurrency].usd;
-    convertedAmount = convertedAmount.toFixed(5);
-  
-    if(toCurrency == USDC_MAIN_ADDRESS || toCurrency == USDT_MAIN_ADDRESS) {
-      const decimals = 6;
-      amountInSmallestUnit = ethers.utils.parseUnits(convertedAmount.toString(), decimals);
-    } else if(toCurrency == WBTC_MAIN_ADDRESS) {
-      const decimals = 8;
-      amountInSmallestUnit = ethers.utils.parseUnits(convertedAmount.toString(), decimals);
-    } else if(toCurrency == ETH_ADDRESS || toCurrency == PAXG_MAIN_ADDRESS) {
-      const decimals = 18;
-      amountInSmallestUnit = ethers.utils.parseUnits(convertedAmount.toString(), decimals);
-    }
-    //console.log("Returning converted amount : ",amountInSmallestUnit);
-    return amountInSmallestUnit;
-  }
-
   async function makeGetRequest(endpoint) {
     try {
       const response = await fetch(`${baseUrl}/api/${endpoint}`, {
@@ -233,7 +168,7 @@ async function convertUSDToETH(amountUSD) {
   }
   
   
-  async function checkAvailability(amount, type, userAddress) {
+  async function checkCardAvailability(amount, type, userAddress) {
     const endpoint = 'cards/check_availability';
     
     const payload = {
@@ -297,7 +232,7 @@ async function convertUSDToETH(amountUSD) {
     //createCardTextbox(Response.message);
   }
 
-  testRun();
+  //testRun();
 
   async function generateCard(cardInfo) {
     document.getElementById("alerts").classList.add("d-none");

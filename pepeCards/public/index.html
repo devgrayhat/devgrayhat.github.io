@@ -190,7 +190,7 @@
                 <button class="btn-eligibility" id="btn-elg-tier2" onclick="checkTier2Eligibility()">See If You Qualify</button>
               </div>
               <div class="btn-wrap">
-                <button class="btn-buy" id="btn-tier2" onclick="buyTier2Card()" style="cursor: pointer;">Buy Now</button>
+                <button class="btn-buy disabled" id="btn-tier2" onclick="" style="cursor: pointer;">Coming soon</button>
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@
                 <button class="btn-eligibility" id="btn-elg-tier3" onclick="checkTier3Eligibility()">See If You Qualify</button>
               </div>
               <div class="btn-wrap">
-                <button class="btn-buy" id="btn-tier3" onclick="buyTier3Card()" style="cursor: pointer;">Buy Now</button>
+                <button class="btn-buy disabled" id="btn-tier3" onclick="" style="cursor: pointer;">Coming soon</button>
               </div>
             </div>
           </div>
@@ -268,6 +268,13 @@
           </div>
         </div>
 
+        <div class="row d-none" id="alert-tier1-failure">
+          <div class="alert alert-danger alert-dismissible align-items-center" role="alert" style="font-family: Gloria Hallelujah">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Sorry!</strong> Your balance is not sufficient to qualify for prepaid cards.
+          </div>
+        </div>
+
         <div class="row d-none" id="alert-general-failure">
           <div class="alert alert-danger alert-dismissible align-items-center" role="alert" style="font-family: Gloria Hallelujah">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -315,6 +322,10 @@
                   </p>
                   <p class="text-cap" style="margin-bottom: 5px;">
                     <span class="text-uppercase text-secondary">Phone: </span>
+                    <span id="card-phone" class="card-details"></span>
+                  </p>
+                  <p class="text-cap" style="margin-bottom: 5px;">
+                    <span class="text-uppercase text-secondary">SMS: </span>
                     <span class="card-details">https://smsreceivefree.com/info/</span>
                     <span id="card-phone" class="card-details"></span>
                   </p>
