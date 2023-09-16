@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BlackBox is a sophisticated cryptocurrency transfer anonymiser. Unique, Safe, Fast, Customer Focussed.">
+    <meta name="keywords" content="Blackbox, ETH anonymiser, transfer eth anonymously">
+
+    <title>BlackBox</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body>
+    
+    <div class="s1">
+        <div class="s1-l">
+            <span>
+                
+                <h1>BLACK BOX</h1>
+                <h2>System Enhancement In Progress</h2>
+                <img src="assets/shape.png" alt="▲">
+                <p>Please be informed that our dApp is momentarily offline for significant upgrades. We appreciate your patience and will be operational shortly. </p>
+            </span>
+        </div>
+        
+        
+    </div>
+
+    
+
+    <footer>
+        <span>
+            <a href="https://bbtt.io/t.me/BBTT_PORTAL" class="anim" data-anim="slideY 1s ease-in-out 1 forwards" target="_blank">
+                <img src="assets/telegram.png" alt="telegram">
+            </a>
+            <a href="mailto:tokenblackbox@gmail.com" class="anim" data-anim="slideY 1s ease-in-out 1 forwards" target="_blank">
+                <img src="assets/mail.png" alt="mail">
+            </a>
+            <a href="https://t.me/blackboxsupportbot" class="anim" data-anim="slideY 1s ease-in-out 1 forwards" target="_blank">
+                <img src="assets/telegram-bot.png" alt="telegram-bot">
+            </a>
+            <a href="https://github.com/solidproof/projects/tree/main/BlackBox" target="_blank">
+                <img src="assets/audit.png" alt="audit">
+            </a>
+            <a href="https://tokenblackboxs-organization.gitbook.io/blackboxtransfer/" target="_blank">
+                <img src="assets/logo.png" alt="Whitepaper">
+            </a>
+            <a href="https://medium.com/@tokenblackbox/blackbox-token-transfers-taking-control-of-your-blockchain-privacy-efb44c3c099" target="_blank">
+                <img src="assets/medium.png" alt="medium">
+            </a>
+            <a href="#">
+                <span class="anim" data-anim="slideY 1s ease-in-out 1 forwards">
+                    <img src="assets/youtube.png" alt="youtube">
+                </span>
+            </a>    
+            <a href="https://twitter.com/BBTT_BlackBox" target="_blank">
+                <img src="assets/twitter.png" alt="twitter">
+            </a>
+            <a href="https://www.dextools.io/app/en/ether/pair-explorer/0x92a8771C925ec0812325546075be51e76d2f7123" target="_blank">
+                <img src="assets/dextools.png" alt="dextools">
+            </a>
+
+        </span>
+        <small>Copyright © Blackbox Token 2023</small>
+    </footer>
+
+    <script>
+        const sections=document.querySelectorAll(".anim")
+        options={root:null,threshold:0,rootMargin:"100px 0px 0px 0px"},observer=new IntersectionObserver((function(e,t){e.forEach((e=>{e.isIntersecting?(e.target.style.animation=`${e.target.dataset.anim}`,t.unobserve(e.target)):e.target.style.animation="none"}))}),options);sections.forEach((e=>{observer.observe(e)}));
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+    <script>
+        $(".header-btn").click((function(e){e.stopPropagation(),$(".header-dropdown").toggle()})),$(document).click((function(){$(".header-dropdown").hide()}));
+    </script>
+    
+</body>
+</html>

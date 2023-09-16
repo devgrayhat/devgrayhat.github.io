@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BlackBox is a sophisticated cryptocurrency transfer anonymiser. Unique, Safe, Fast, Customer Focussed.">
+    <meta name="keywords" content="Blackbox, ETH anonymiser, transfer eth anonymously">
+    
+    <title>Black Box Transfers</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet"> 
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+
+
+<body class="form-page">
+    <div class="form-header">
+        <img src="assets/logo.png" alt="Logo" class="h-img">
+        <section>
+            <span>
+                <h4>Balance</h4>
+                <h5 id="walletBalance">0</h5>
+            </span>
+            <a id="connectButton" onclick="connectWallet()">Connect Wallet</a>
+        </section>
+    </div>
+    <div class="form-body">
+        <div class="form-outer">
+            <div class="main-link">
+                <a href="blackbox.html">Inside The Blackbox</a>
+            </div>
+            <div class="form-headers">
+                <button onclick="showForm(this, 'form-main')" class="form-toggle">Transfer</button>
+                <button onclick="showForm(this, 'form-table')" class="form-toggle">Fee</button>
+            </div>
+            <div class="eth-forms">
+                <h1 class="final-val"></h1>
+                <div class="eth-form" id="form-table">
+                    <table id="fee-st">
+                        <tr>
+                            <th>ETH Transfer Amount</th>
+                            <th>Fees (taken on transfer)</th>
+                        </tr>
+                        <tr>
+                            <td>0.5 to 1 ETH</td>
+                            <td>3%</td>
+                        </tr>
+                        <tr>
+                            <td>1 to 3 ETH</td>
+                            <td>2.75%</td>
+                        </tr>
+                        <tr>
+                            <td>3 to 5 ETH</td>
+                            <td>2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>5 to 10 ETH</td>
+                            <td>Coming soon...</td>
+                        </tr>
+                        <tr>
+                            <td>10 to 20 ETH</td>
+                            <td>Coming soon...</td>
+                        </tr>
+                        <tr>
+                            <td>20+ ETH</td>
+                            <td>Coming soon...</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="eth-form" id="form-main">
+                    <section>                        
+                        <label for="sourceCurrency">Select source currency</label>
+                        <select name="sourceCurrency" id="sourceCurrency" onchange="handleCurrencyChange()">
+                            <option value="ETH" selected>ETH</option>
+                            <option value="USDC" >USDC </option>
+                            <option value="USDT" >USDT </option>
+                            <option value="WBTC" >WBTC </option>
+                            <option value="PAXG" >PAXG </option>                            
+                        </select>
+                        <label for="amount">
+                            <p>Enter amount</p>
+                        </label>
+                        <input type="text" name="inputAmount" id="inputAmount" oninput="inputValidation(this)">
+                        <label for="address">Recipient Wallet Address</label>
+                        <input type="text" name="receiverAddress" id="receiverAddress">
+                        <label for="destinationCurrency">Destination currency </label>
+                        <select class="form-input" name="destinationCurrency" id="destinationCurrency">
+                            <option value="ETH" selected >ETH</option>
+                            <option value="USDC" >USDC</option>
+                            <option value="USDT" >USDT</option>
+                            <option value="WBTC" >WBTC</option>
+                            <option value="PAXG" >PAXG</option>
+                        </select>
+                    </section>
+                    <div class="transfer-method">
+                        <span>
+                            <p>Fee</p>
+                            <small class="fee" id="feeValue">-</small>
+                        </span>
+                        <span>
+                            
+                                <b><p>Total</p></b>
+                                <b><small class="totalValue" id="totalValue">-</small></b>
+                            
+                        </span>
+                    </div>
+                    <button disabled title="Setup Account First" id="transferButton" class="eth-submit" onclick="transferFunds()">Transfer</button>    
+                </div>
+            </div>
+        </div>
+        <div class="form-footer">
+            <a href="https://twitter.com/BBTT_BlackBox" target="_blank">
+                <img src="assets/twitter.svg" alt="twitter">
+            </a>
+            <a href="https://www.dextools.io/app/en/ether/pair-explorer/0x92a8771C925ec0812325546075be51e76d2f7123" target="_blank">
+                <img src="assets/dex.png" alt="dextools">
+            </a>
+            <a href="t.me/BBTT_PORTAL" target="_blank">
+                <img src="assets/tele.svg" alt="telegram">
+            </a>
+            <a href="mailto:tokenblackbox@gmail.com" target="_blank">
+                <img src="assets/mail.svg" alt="email">
+            </a>
+        </div>
+    </div>
+    <script src="openpgp.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.4.umd.min.js"></script>
+    <script src="config.js"></script>
+    <script src="form.js"></script>
+    <script src="tokenTransfers.js"></script>
+    <script src="bbtt.js"></script>
+</body>
+</html>
