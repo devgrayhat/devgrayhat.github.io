@@ -20,6 +20,8 @@ async function updateWalletBalance(provider) {
     const balance = await signer.getBalance();
     const balAmountInWei = ethers.utils.formatEther(balance);
     document.getElementById('walletBalance').innerText = parseFloat(balAmountInWei).toFixed(5);
+    const connectButton = document.getElementById("connectButton");
+    connectButton.innerText = "Connected";
 }
 
 async function connectWallet() {
@@ -75,6 +77,10 @@ function calculateFee(sourceCurrency, input) {
         feePercentage = 0.0275;
       } else if (inputValue > ETH_LIMIT_3 && inputValue <= ETH_LIMIT_4) {
         feePercentage = 0.025;
+      } else if (inputValue > ETH_LIMIT_4 && inputValue <= ETH_LIMIT_5) {
+        feePercentage = 0.03;
+      } else if (inputValue > ETH_LIMIT_5 && inputValue <= ETH_LIMIT_6) {
+        feePercentage = 0.03;
       }
     } else if (sourceCurrency === USDC_ADDRESS || sourceCurrency === USDT_ADDRESS) {
       if (inputValue >= USD_LIMIT_1 && inputValue <= USD_LIMIT_2) {
